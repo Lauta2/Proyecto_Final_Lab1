@@ -50,6 +50,7 @@ public class EntrenadorData {
             ps.setString(3, entrenador.getApellido());
             ps.setString(4, entrenador.getEspecialidad());
             ps.setBoolean(5, entrenador.isEstado());
+            ps.setInt(6, entrenador.getIdEntrenador());
             int exito=ps.executeUpdate();
             if (exito==1) {
                 JOptionPane.showMessageDialog(null, "modificado con exito");
@@ -61,6 +62,61 @@ public class EntrenadorData {
             JOptionPane.showMessageDialog(null, "Error al ingresar a la base de datos");
             }      
         }
+    
+    public Entrenador buscarEntrenador(int idEntrenador){
+        Entrenador entrenador=null;
+        String sql = "SELECT idEntrenador, nombre, apellido, estado FROM Entrenador WHERE idEntrenador = ?";
+        PreparedStatement ps = null;
+    try {
+    ps = con.prepareStatement(sql);
+    ps.setInt(1,idEntrenador );
+    ResultSet rs = ps.executeQuery();
+    
+    if(rs.next()){
+     entrenador=new Entrenador(); 
+     entrenador.setIdEntrenador(idEntrenador);
+     entrenador.setNombre(rs.getString("nombre"));
+     entrenador.setApellido(rs.getString("apellido"));
+     entrenador.setEstado(rs.getBoolean("estado"));
+        }else{
+        JOptionPane.showMessageDialog(null, "No está registrado ese entrenador");
+        }
+    }catch(SQLException ex){
+    JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+    }
+        return entrenador;
+
+}
+    
+   public Entrenador buscarEntrenadorActivo(int idEntrenador){
+        Entrenador entrenador=null;
+        String sql = "SELECT idEntrenador, nombre, apellido, estado FROM Entrenador WHERE idEntrenador = ? AND estado = 1";
+        PreparedStatement ps = null;
+    try {
+    ps = con.prepareStatement(sql);
+    ps.setInt(1,idEntrenador );
+    ResultSet rs = ps.executeQuery();
+    
+    if(rs.next()){
+     entrenador=new Entrenador(); 
+     entrenador.setIdEntrenador(idEntrenador);
+     entrenador.setNombre(rs.getString("nombre"));
+     entrenador.setApellido(rs.getString("apellido"));
+     entrenador.setEstado(rs.getBoolean("estado"));
+        }else{
+        JOptionPane.showMessageDialog(null, "No existe la materia");
+        }
+    }catch(SQLException ex){
+    JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+    }
+        return entrenador;
+
+} 
+   
+public Entrenador buscarEntrenadorXEspecialidad(String especialidad){
+    Entrenador entrenador=null;
+    <Entrenador> 
+}
     
     
     
