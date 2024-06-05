@@ -32,12 +32,12 @@ public class EntrenadorData {
             ps.executeUpdate();
             ResultSet rs=ps.getGeneratedKeys();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Socio añadido con exito");
+                JOptionPane.showMessageDialog(null, "Entrenador añadido con exito");
             }
             
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la tabla socio "+ ex);
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la tabla entrenador"+ ex);
         }
     }
     
@@ -185,7 +185,7 @@ public ArrayList<Entrenador> buscarEntrenadoresXNombre(String nombre){
 public ArrayList<Entrenador> buscarEntrenadoresXApellido(String apellido){
     
     ArrayList<Entrenador> entrenadores=new ArrayList<>();
-    String sql = "SELECT * FROM entrenador WHERE nombre=?";
+    String sql = "SELECT * FROM entrenador WHERE apellido=?";
     try {
                 PreparedStatement ps= con.prepareStatement(sql);
                 ps.setString(1, apellido);
@@ -207,7 +207,7 @@ public ArrayList<Entrenador> buscarEntrenadoresXApellido(String apellido){
         return entrenadores;
 }
     
-public ArrayList<Entrenador> buscarEntrenadoresXNombre(String nombre, String apellido){
+public ArrayList<Entrenador> buscarEntrenadoresXNombreyApellido(String nombre, String apellido){
     
     ArrayList<Entrenador> entrenadores=new ArrayList<>();
     String sql = "SELECT * FROM entrenador WHERE nombre=? AND apellido=?";
