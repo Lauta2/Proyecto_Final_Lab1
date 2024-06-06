@@ -115,7 +115,7 @@ public class SocioData {
     }
 //cambiar booleano
     public void eliminarSocio(int idSocio) {
-        String sql = "DELETE FROM Socio WHERE idSocio = ?";
+        String sql = "UPDATE Socio SET estado=0 WHERE idSocio = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idSocio);

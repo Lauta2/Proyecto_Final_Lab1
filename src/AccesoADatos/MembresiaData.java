@@ -115,7 +115,7 @@ public class MembresiaData {
     }
 //cambiar
     public void eliminarMembresia(int idMembresia) {
-        String sql = "DELETE FROM membresia WHERE idMembresia = ?";
+        String sql = "UPDATE membresia SET estado=0 WHERE idMembresia=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idMembresia);
