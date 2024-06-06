@@ -1,12 +1,15 @@
 
 package Main_Principal;
 
+import AccesoADatos.ClasesData;
 import AccesoADatos.EntrenadorData;
 import AccesoADatos.SocioData;
+import Entidades.Clase;
 import Entidades.Entrenador;
 import Entidades.Socio;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Time;
 
 
 public class Proyecto_Final {
@@ -38,7 +41,7 @@ public class Proyecto_Final {
       //sd.eliminarSocio(4);
       
         //------Entrenador------
-      //Entrenador et=new Entrenador(457790, "Rodolfo", "Gil", "Pecho", true);
+      //Entrenador et=new Entrenador(456773, "Carlos", "Mujica", "Piernas", true);
       //EntrenadorData ed=new EntrenadorData();
       
       //guarda entrenador
@@ -48,7 +51,7 @@ public class Proyecto_Final {
       //ed.eliminarEntrenador(2);
       
       //modifica entrenador
-      //Entrenador entre=new Entrenador(3, 448922, "Luciano", "Aguilera", "Espalda", true);
+      Entrenador entre=new Entrenador(3, 448922, "Luciano", "Aguilera", "Espalda", true);
       //ed.modificarEntrenador(entre);
       
       //buscar entrenador
@@ -127,8 +130,38 @@ public class Proyecto_Final {
 //                System.out.println("-------------------------------");
 //            }
 //        }
-      
+
+        //------Clase------
+        Entrenador entre1=new Entrenador (5,151819, "Martin", "Palermo","Futbol", true);
+         Clase clase = new Clase("futbol",entre1 , Time.valueOf("17:00:00"), 11, true);
+         ClasesData cd=new ClasesData();
+         
+         //guardar clase
+         //cd.guardarClase(clase);
+         
+         //buscar clase
+         //Clase clas=cd.buscarClase(8);
+         //System.out.println("Clase encontrada");
+         //System.out.println(clas);
+         
+         //listar clases
+//         List<Clase> list=cd.listarClases();
+//         for(Clase clas:list){
+//             System.out.println(clas);
+//         }
+          
+         //modificar clase
+         //Clase clas2=new Clase(4,"Espalda", entre, Time.valueOf("16:00:00"), 10, true);
+         //cd.modificarClase(clas2);
+          
+         
+         //eliminar clas
+         //cd.eliminarClase(7);
+         
+    
     }
+
+    
     
     
     
