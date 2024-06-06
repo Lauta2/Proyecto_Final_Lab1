@@ -43,14 +43,14 @@ public class ClasesData {
 
     public Clase buscarClase(int id) {
         Clase clase = null;
-        String sql = "SELECT * FROM clase WHERE id_clase = ? AND estado = 1";
+        String sql = "SELECT * FROM clase WHERE idClase = ? AND estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 clase = new Clase();
-                clase.setIdClase(rs.getInt("id_clase"));
+                clase.setIdClase(rs.getInt("idClase"));
                 clase.setNombre(rs.getString("nombre"));
                 clase.setEntrenador(new EntrenadorData().buscarEntrenadorActivo(rs.getInt("idEntrenador")));
                 clase.setHorario(rs.getTime("horario"));
@@ -74,7 +74,7 @@ public class ClasesData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Clase clase = new Clase();
-                clase.setIdClase(rs.getInt("id_clase"));
+                clase.setIdClase(rs.getInt("idClase"));
                 clase.setNombre(rs.getString("nombre"));
                 clase.setEntrenador(new EntrenadorData().buscarEntrenadorActivo(rs.getInt("idEntrenador")));
                 clase.setHorario(rs.getTime("horario"));
@@ -90,7 +90,7 @@ public class ClasesData {
     }
 
     public void modificarClase(Clase clase) {
-        String sql = "UPDATE clase SET nombre = ?, idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE id_clase = ?";
+        String sql = "UPDATE clase SET nombre = ?, idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, clase.getNombre());
@@ -112,7 +112,7 @@ public class ClasesData {
     }
 
     public void eliminarClase(int id) {
-        String sql = "UPDATE clase SET estado = 0 WHERE id_clase = ?";
+        String sql = "UPDATE clase SET estado = 0 WHERE idClase = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
