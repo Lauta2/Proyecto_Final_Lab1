@@ -74,7 +74,7 @@ public class MembresiaData {
             if (rs.next()) {
                 membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                membresia.setSocio(new SocioData().buscarSocio(rs.getInt("idSocio")));
+                membresia.setSocio(new SocioData().buscarSocioID(rs.getInt("idSocio")));
                 membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
@@ -99,7 +99,7 @@ public class MembresiaData {
             while (rs.next()) {
                 Membresia membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                membresia.setSocio(new SocioData().buscarSocio(rs.getInt("idSocio")));
+                membresia.setSocio(new SocioData().buscarSocioID(rs.getInt("idSocio")));
                 membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
@@ -113,7 +113,7 @@ public class MembresiaData {
         }
         return membresias;
     }
-//cambiar
+
     public void eliminarMembresia(int idMembresia) {
         String sql = "UPDATE membresia SET estado=0 WHERE idMembresia=?";
         try {
@@ -130,4 +130,17 @@ public class MembresiaData {
             JOptionPane.showMessageDialog(null, "Error al eliminar la membresia: " + ex.getMessage());
         }
     }
+    
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
