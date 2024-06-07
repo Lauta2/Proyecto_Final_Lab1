@@ -1,22 +1,25 @@
 
 package Main_Principal;
 
+import AccesoADatos.AsistenciaData;
 import AccesoADatos.ClasesData;
 import AccesoADatos.EntrenadorData;
 import AccesoADatos.SocioData;
+import Entidades.Asistencia;
 import Entidades.Clase;
 import Entidades.Entrenador;
 import Entidades.Socio;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Time;
+import java.time.LocalDate;
 
 
 public class Proyecto_Final {
 
     public static void main(String[] args) {
         //------Socio------
-       //Socio so= new Socio(457811, "exequiel", "Silva", 20, "exe_5@gmail.com", 26655634, true);
+       Socio so= new Socio(1,457811, "exequiel", "Silva", 20, "exe_5@gmail.com", 26655634, true);
        //SocioData sd=new SocioData();
        
        //guardar socio
@@ -51,7 +54,7 @@ public class Proyecto_Final {
       //ed.eliminarEntrenador(2);
       
       //modifica entrenador
-      Entrenador entre=new Entrenador(3, 448922, "Luciano", "Aguilera", "Espalda", true);
+//      Entrenador entre=new Entrenador(3, 448922, "Luciano", "Aguilera", "Espalda", true);
       //ed.modificarEntrenador(entre);
       
       //buscar entrenador
@@ -132,7 +135,7 @@ public class Proyecto_Final {
 //        }
 
         //------Clase------
-        Entrenador entre1=new Entrenador (5,151819, "Martin", "Palermo","Futbol", true);
+        Entrenador entre1=new Entrenador (1,18544684, "Jorge", "Gutierrez","Musculacion", true);
          Clase clase = new Clase("futbol",entre1 , Time.valueOf("17:00:00"), 11, true);
          ClasesData cd=new ClasesData();
          
@@ -158,11 +161,17 @@ public class Proyecto_Final {
          //eliminar clas
          //cd.eliminarClase(7);
          
-    
+         //---------Asistencia----------
+         AsistenciaData ad=new AsistenciaData();
+         Asistencia asiste=new Asistencia(so,clase,LocalDate.now());
+         ad.guardarAsistencia(asiste);
+         
+         
+         
+         
+         
+         
+         
     }
 
-    
-    
-    
-    
 }

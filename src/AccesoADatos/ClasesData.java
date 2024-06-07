@@ -65,6 +65,24 @@ public class ClasesData {
         }
         return clase;
     }
+    
+    public List<Integer> listarIDPresentesAhora(Clase clase){
+        List<Integer> presentes=new ArrayList<>();
+        String sql="SELECT asistencia.idSocio FROM asistencia JOIN clase ON (asistencia.idClase=clase.id_clase) WHERE clase.id_clase=?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, clase.getIdClase());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Integer id=rs.getInt("idSocio");
+                presentes.add(id);
+            }
+            ps.close();
+        }catch(SQLException ex){
+           JOptionPane.showMessageDialog(null,"Error al Listar ID de los Asistentes"+ex.getMessage());  
+        }
+        return presentes;
+    }
 
     public List<Clase> listarClases() {
         List<Clase> clases = new ArrayList<>();
