@@ -24,8 +24,8 @@ public class AsistenciaData {
         String sql = "INSERT INTO asistencia (idSocio, idClase, fechaAsistencia) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, /*asistencia.getSocio().getIdSocio()*/1);
-            ps.setInt(2, /*asistencia.getClase().getIdClase()*/1);
+            ps.setInt(1, asistencia.getSocio().getIdSocio());
+            ps.setInt(2, asistencia.getClase().getIdClase());
             ps.setDate(3, Date.valueOf(asistencia.getFechaAsistencia()));
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();

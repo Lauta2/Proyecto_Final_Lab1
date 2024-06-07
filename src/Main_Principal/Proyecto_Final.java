@@ -19,7 +19,7 @@ public class Proyecto_Final {
 
     public static void main(String[] args) {
         //------Socio------
-       Socio so= new Socio(1,457811, "exequiel", "Silva", 20, "exe_5@gmail.com", 26655634, true);
+       Socio so= new Socio(2,456325,"marcos" ,"Mancuello" ,18 , "markitos_2@gmail.com", 266512347, true);
        //SocioData sd=new SocioData();
        
        //guardar socio
@@ -135,8 +135,8 @@ public class Proyecto_Final {
 //        }
 
         //------Clase------
-        Entrenador entre1=new Entrenador (1,18544684, "Jorge", "Gutierrez","Musculacion", true);
-         Clase clase = new Clase("futbol",entre1 , Time.valueOf("17:00:00"), 11, true);
+        Entrenador entre1=new Entrenador (5,151819, "Martin", "Palermo","Futbol", true);
+         Clase clase = new Clase(8,"futbol",entre1 , Time.valueOf("17:00:00"), 11, true);
          ClasesData cd=new ClasesData();
          
          //guardar clase
@@ -164,7 +164,14 @@ public class Proyecto_Final {
          //---------Asistencia----------
          AsistenciaData ad=new AsistenciaData();
          Asistencia asiste=new Asistencia(so,clase,LocalDate.now());
-         ad.guardarAsistencia(asiste);
+         
+         //guardar asistencia
+         //ad.guardarAsistencia(asiste);
+         
+         //eliminar asistencia
+         ad.eliminarAsistencia(6);
+         
+         
          
          
          
