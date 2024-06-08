@@ -106,14 +106,14 @@ public class SocioData {
   
   public Socio buscarSocioDNI(int DNI) {
         Socio socio = null;
-        String sql = "SELECT dni, nombre, apellido, edad, correo, telefono, estado FROM Socio WHERE dni = ?";
+        String sql = "SELECT idSocio,dni, nombre, apellido, edad, correo, telefono, estado FROM Socio WHERE dni = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, DNI);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 socio = new Socio();
-                socio.setIdSocio(DNI);
+                socio.setIdSocio(rs.getInt("idSocio"));
                 socio.setDni(rs.getInt("dni"));
                 socio.setNombre(rs.getString("nombre"));
                 socio.setApellido(rs.getString("apellido"));
@@ -121,9 +121,7 @@ public class SocioData {
                 socio.setCorreo(rs.getString("correo"));
                 socio.setTelefono(rs.getInt("telefono"));
                 socio.setEstado(rs.getBoolean("estado"));
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro el socio");
-            }
+            } 
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());

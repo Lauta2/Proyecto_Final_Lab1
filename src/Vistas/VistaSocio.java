@@ -294,11 +294,16 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
-        if(!(jt_Telefono.getText().equalsIgnoreCase("") || jt_Nombre.getText().equalsIgnoreCase("") || jt_Email.getText().equalsIgnoreCase("") || jt_Edad.getText().equalsIgnoreCase("") || jt_DNI.getText().equalsIgnoreCase("") || jt_Apellido.getText().equalsIgnoreCase(""))){
+        
         if(socio==null){
+            if(jt_Telefono.getText().equalsIgnoreCase("") || jt_Nombre.getText().equalsIgnoreCase("") || jt_Email.getText().equalsIgnoreCase("") || jt_Edad.getText().equalsIgnoreCase("") || jt_DNI.getText().equalsIgnoreCase("") || jt_Apellido.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(this, "NO DEJE CAMPOS EN BLANCO");
+            return;
+            }
             try{
             socio=new Socio();
-            if(Integer.parseInt(jt_DNI.getText())== socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText())).getDni()){
+            if(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText()))!=null){
+                System.out.println(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText())));
                 JOptionPane.showMessageDialog(this, "DNI YA REGISTRADO!");
                 return;
             }
@@ -314,13 +319,16 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             socio.setCorreo(jt_Email.getText());
             socio.setEstado(jcb_Estado.isSelected());
             socioData.guardarSocio(socio);
-            jt_ID.setText(socioData.buscarSocioDNI(socio.getDni())+"");
+            jt_ID.setText(socioData.buscarSocioDNI(socio.getDni()).getIdSocio()+"");
             jt_ID.disable();
         }else{
             try{
             socio.setDni(Integer.parseInt(jt_DNI.getText()));
             socio.setEdad(Integer.parseInt(jt_Edad.getText()));
             socio.setTelefono(Integer.parseInt(jt_Telefono.getText()));
+            jt_ID.enable();
+            socio.setIdSocio(Integer.parseInt(jt_ID.getText()));
+            jt_ID.disable();
             }catch(NumberFormatException ex){
                  JOptionPane.showMessageDialog(this, "Ingrese numeros Enteros en:\nDNI - EDAD - TELEFONO ");
                     return;
@@ -330,11 +338,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             socio.setCorreo(jt_Email.getText());
             socio.setEstado(jcb_Estado.isSelected());
             socioData.modificarSocio(socio);
+        
         }
-        }else{
-            JOptionPane.showMessageDialog(this, "NO DEJE CAMPOS EN BLANCO");
-            return;
-        }
+        
     }//GEN-LAST:event_jb_GuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
