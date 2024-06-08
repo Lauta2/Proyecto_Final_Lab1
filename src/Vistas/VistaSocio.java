@@ -6,6 +6,8 @@ package Vistas;
 
 import AccesoADatos.SocioData;
 import Entidades.Socio;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,8 +52,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jt_Telefono = new javax.swing.JTextField();
         jcb_Estado = new javax.swing.JCheckBox();
-        jb_Añadir = new javax.swing.JButton();
-        jb_Modificar = new javax.swing.JButton();
+        jb_Guardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jb_Salir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -83,13 +84,21 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Telefono");
 
-        jb_Añadir.setText("Añadir");
-
-        jb_Modificar.setText("Modificar");
+        jb_Guardar.setText("Guardar");
+        jb_Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_GuardarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jb_Salir.setText("X");
+        jb_Salir.setText("Salir");
         jb_Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_SalirActionPerformed(evt);
@@ -114,65 +123,63 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(203, 203, 203)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_Salir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(jb_Añadir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(jb_Modificar)
-                        .addGap(60, 60, 60)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jt_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(67, 67, 67)
+                            .addComponent(jb_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
+                                .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jt_Apellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jt_Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel2))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jt_Edad, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jcb_Estado)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(141, 141, 141))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jt_ID, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(jt_DNI))
-                                .addGap(18, 18, 18)
-                                .addComponent(jb_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel5))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jt_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jt_Apellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jt_Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel9))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel2))))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jt_Edad, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jcb_Estado)
+                                            .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addGap(141, 141, 141))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jt_ID, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(jt_DNI))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jb_Salir)
+                                        .addComponent(jb_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(141, 141, 141))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jb_Salir))
+                .addComponent(jLabel1)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -212,9 +219,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jb_Modificar)
-                    .addComponent(jb_Añadir)
-                    .addComponent(jButton1))
+                    .addComponent(jb_Guardar)
+                    .addComponent(jButton1)
+                    .addComponent(jb_Salir))
                 .addGap(16, 16, 16))
         );
 
@@ -227,7 +234,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void jb_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_BuscarActionPerformed
         int id;
-        
+        ArrayList<Socio> socios = new ArrayList<>();
         if (!jt_ID.getText().equals("")) {
             try {
                 id = Integer.parseInt(jt_ID.getText());
@@ -248,11 +255,16 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 socio = socioData.buscarSocioID(id);
             }
         }
-        }
-            //ARREGLAR
-            if(socio==null){
-            if (socioData.buscarSocioNombre(jt_Nombre.getText()).size()==1) {
-                socio = socioData.buscarSocioNombre(jt_Nombre.getText()).get(1);
+        }else {
+            socios=(ArrayList<Socio>) socioData.buscarSocioNombre(jt_Nombre.getText());
+            if (socioData.buscarSocioNombre(jt_Nombre.getText()).size() > 1) {
+                JOptionPane.showMessageDialog(this, "Existen mas de un " + jt_Nombre.getText() + "\nIngrese ID de Socio!\nBusquelo en Lista de Socios");
+                return;
+                
+            } else if(!jt_Nombre.getText().equalsIgnoreCase("")){
+                for (Socio socio1 : socios) {
+                    socio=socio1;
+                }
                 jt_DNI.setText(socio.getDni() + "");
                 jt_Nombre.setText(socio.getNombre());
                 jt_Apellido.setText(socio.getApellido());
@@ -262,12 +274,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 jt_Telefono.setText(socio.getTelefono() + "");
                 jt_ID.setText(socio.getIdSocio()+"");
                 jt_ID.disable();
-                
-            } else if (socioData.buscarSocioNombre(jt_Nombre.getText()).size() > 1) {
-                JOptionPane.showMessageDialog(this, "Existen mas de un " + jt_Nombre.getText() + "\nIngrese ID de Socio!");
-                return;
             }
-            }
+            
+        }
 
     }//GEN-LAST:event_jb_BuscarActionPerformed
 
@@ -284,6 +293,63 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jcb_Estado.isSelected();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
+        if(!(jt_Telefono.getText().equalsIgnoreCase("") || jt_Nombre.getText().equalsIgnoreCase("") || jt_Email.getText().equalsIgnoreCase("") || jt_Edad.getText().equalsIgnoreCase("") || jt_DNI.getText().equalsIgnoreCase("") || jt_Apellido.getText().equalsIgnoreCase(""))){
+        if(socio==null){
+            try{
+            socio=new Socio();
+            if(Integer.parseInt(jt_DNI.getText())== socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText())).getDni()){
+                JOptionPane.showMessageDialog(this, "DNI YA REGISTRADO!");
+                return;
+            }
+            socio.setDni(Integer.parseInt(jt_DNI.getText()));
+            socio.setEdad(Integer.parseInt(jt_Edad.getText()));
+            socio.setTelefono(Integer.parseInt(jt_Telefono.getText()));
+            }catch(NumberFormatException ex){
+                 JOptionPane.showMessageDialog(this, "Ingrese numeros Enteros en:\nDNI - EDAD - TELEFONO ");
+                    return;
+                    }
+            socio.setApellido(jt_Apellido.getText());
+            socio.setNombre(jt_Nombre.getText());
+            socio.setCorreo(jt_Email.getText());
+            socio.setEstado(jcb_Estado.isSelected());
+            socioData.guardarSocio(socio);
+            jt_ID.setText(socioData.buscarSocioDNI(socio.getDni())+"");
+            jt_ID.disable();
+        }else{
+            try{
+            socio.setDni(Integer.parseInt(jt_DNI.getText()));
+            socio.setEdad(Integer.parseInt(jt_Edad.getText()));
+            socio.setTelefono(Integer.parseInt(jt_Telefono.getText()));
+            }catch(NumberFormatException ex){
+                 JOptionPane.showMessageDialog(this, "Ingrese numeros Enteros en:\nDNI - EDAD - TELEFONO ");
+                    return;
+                    }
+            socio.setApellido(jt_Apellido.getText());
+            socio.setNombre(jt_Nombre.getText());
+            socio.setCorreo(jt_Email.getText());
+            socio.setEstado(jcb_Estado.isSelected());
+            socioData.modificarSocio(socio);
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "NO DEJE CAMPOS EN BLANCO");
+            return;
+        }
+    }//GEN-LAST:event_jb_GuardarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(socio==null){
+            JOptionPane.showMessageDialog(this, "BUSQUE CON ANTERIORIDAD EL SOCIO A ELIMINAR");
+        }else{
+            jt_ID.enable();
+            socioData.eliminarSocio(socio.getIdSocio());
+            jt_ID.disable();
+            jcb_Estado.setSelected(false);
+        }
+
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -297,9 +363,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JButton jb_Añadir;
     private javax.swing.JButton jb_Buscar;
-    private javax.swing.JButton jb_Modificar;
+    private javax.swing.JButton jb_Guardar;
     private javax.swing.JButton jb_Salir;
     private javax.swing.JCheckBox jcb_Estado;
     private javax.swing.JTextField jt_Apellido;

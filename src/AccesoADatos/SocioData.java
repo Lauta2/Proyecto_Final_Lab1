@@ -104,6 +104,33 @@ public class SocioData {
         return socio;
     }
   
+  public Socio buscarSocioDNI(int DNI) {
+        Socio socio = null;
+        String sql = "SELECT dni, nombre, apellido, edad, correo, telefono, estado FROM Socio WHERE dni = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, DNI);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                socio = new Socio();
+                socio.setIdSocio(DNI);
+                socio.setDni(rs.getInt("dni"));
+                socio.setNombre(rs.getString("nombre"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getInt("telefono"));
+                socio.setEstado(rs.getBoolean("estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el socio");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el socio: " + ex.getMessage());
+        }
+        return socio;
+    }
+  
   
   
   public List<Socio> buscarSocioNombre(String nombre) {
