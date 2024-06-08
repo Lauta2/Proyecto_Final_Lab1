@@ -294,32 +294,35 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
-        
+        int dni,edad,telefono;
+        boolean estado;
+        String nombre,apellido,correo;
         if(socio==null){
             if(jt_Telefono.getText().equalsIgnoreCase("") || jt_Nombre.getText().equalsIgnoreCase("") || jt_Email.getText().equalsIgnoreCase("") || jt_Edad.getText().equalsIgnoreCase("") || jt_DNI.getText().equalsIgnoreCase("") || jt_Apellido.getText().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(this, "NO DEJE CAMPOS EN BLANCO");
             return;
             }
             try{
-            socio=new Socio();
+           
             if(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText()))!=null){
-                System.out.println(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText())));
                 JOptionPane.showMessageDialog(this, "DNI YA REGISTRADO!");
                 return;
             }
-            socio.setDni(Integer.parseInt(jt_DNI.getText()));
-            socio.setEdad(Integer.parseInt(jt_Edad.getText()));
-            socio.setTelefono(Integer.parseInt(jt_Telefono.getText()));
+            dni=(Integer.parseInt(jt_DNI.getText()));
+            edad=(Integer.parseInt(jt_Edad.getText()));
+            telefono=(Integer.parseInt(jt_Telefono.getText()));
             }catch(NumberFormatException ex){
                  JOptionPane.showMessageDialog(this, "Ingrese numeros Enteros en:\nDNI - EDAD - TELEFONO ");
                     return;
                     }
-            socio.setApellido(jt_Apellido.getText());
-            socio.setNombre(jt_Nombre.getText());
-            socio.setCorreo(jt_Email.getText());
-            socio.setEstado(jcb_Estado.isSelected());
+            apellido=(jt_Apellido.getText());
+            nombre=(jt_Nombre.getText());
+            correo=(jt_Email.getText());
+            estado=(jcb_Estado.isSelected());
+            socio=new Socio(dni,nombre, apellido, edad, correo, telefono, estado);
             socioData.guardarSocio(socio);
             jt_ID.setText(socioData.buscarSocioDNI(socio.getDni()).getIdSocio()+"");
+            socio.setIdSocio(Integer.parseInt(jt_ID.getText()));
             jt_ID.disable();
         }else{
             try{
