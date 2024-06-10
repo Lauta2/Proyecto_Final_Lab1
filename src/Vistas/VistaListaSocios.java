@@ -82,7 +82,9 @@ public class VistaListaSocios extends javax.swing.JInternalFrame {
     }else{
         socios=(ArrayList<Socio>) socioData.listarSocios();
             for (Socio s: socios) {
-                if(s.getNombre().toLowerCase().contains(jt_BuscarXNombre.getText().toLowerCase())){
+                if(s.getNombre().toLowerCase().contains(jt_BuscarXNombre.getText().toLowerCase()) && !jrb_Activos.isSelected()){
+                    modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
+                }else if(s.getNombre().toLowerCase().contains(jt_BuscarXNombre.getText().toLowerCase()) && jrb_Activos.isSelected() && jrb_Activos.isSelected()==s.isEstado()){
                     modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
                 }
             }
