@@ -10,6 +10,8 @@ import Entidades.Entrenador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alakyan
@@ -201,6 +203,11 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jt_TablaEntrenadores);
 
         jb_Guardar.setText("Guardar");
+        jb_Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_GuardarActionPerformed(evt);
+            }
+        });
 
         jb_Limpiar.setText("Limpiar");
         jb_Limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -302,6 +309,41 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
     private void jt_SegundoValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jt_SegundoValorKeyReleased
         listar();
     }//GEN-LAST:event_jt_SegundoValorKeyReleased
+
+    private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
+    for (int row = 0; row < tabla.getRowCount(); row++) {
+        int idEntrenador = (int) tabla.getValueAt(row, 0);
+        int dni = (int) tabla.getValueAt(row, 1);
+        String nombre = (String) tabla.getValueAt(row, 2);
+        String apellido = (String) tabla.getValueAt(row, 3);
+        String especialidad = (String) tabla.getValueAt(row, 4);
+        boolean estado = (boolean) tabla.getValueAt(row, 5);
+      
+        Entrenador entrenador = new Entrenador(idEntrenador, dni, nombre, apellido, especialidad, estado);
+       
+        if (dniYaExiste(dni, idEntrenador)) {
+            JOptionPane.showMessageDialog(this, "El DNI ingresado ya está en uso por otro entrenador.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+        entrenadorData.modificarEntrenador(entrenador);
+    }
+    
+    JOptionPane.showMessageDialog(this, "Cambios guardados correctamente");
+}
+
+private boolean dniYaExiste(int dni, int idEntrenadorActual) {
+   
+    List<Entrenador> entrenadores = entrenadorData.listarEntrenadores();
+    
+   
+    for (Entrenador e : entrenadores) {
+        if (e.getDni() == dni && e.getIdEntrenador() != idEntrenadorActual) {
+            return true;
+        }
+    }
+    
+    return false; 
+    }//GEN-LAST:event_jb_GuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
