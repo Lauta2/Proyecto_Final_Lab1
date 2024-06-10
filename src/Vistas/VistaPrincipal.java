@@ -64,6 +64,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jmenu_Socio);
 
         jmenu_ListaSocios.setText("Lista de Socios");
+        jmenu_ListaSocios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmenu_ListaSociosActionPerformed(evt);
+            }
+        });
         jMenu1.add(jmenu_ListaSocios);
 
         jMenuBar1.add(jMenu1);
@@ -105,6 +110,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         VistaSocio vs= new VistaSocio();
         vs.setVisible(true);
         escritorio.add(vs);    }//GEN-LAST:event_jmenu_SocioActionPerformed
+
+    private void jmenu_ListaSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenu_ListaSociosActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaListaSocios vls= new VistaListaSocios();
+        vls.setVisible(true);
+        escritorio.add(vls);
+    }//GEN-LAST:event_jmenu_ListaSociosActionPerformed
 
     /**
      * @param args the command line arguments
