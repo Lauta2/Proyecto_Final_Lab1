@@ -7,6 +7,7 @@ package AccesoADatos;
 import Entidades.Entrenador;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +61,32 @@ public class EntrenadorData {
         
     }
     
+    public List<Entrenador> listarEntrenadores(){
+        List<Entrenador> entrenadores=new ArrayList<>();
+        String sql= "SELECT * FROM entrenador";
+        PreparedStatement ps = null;
+        try{
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Entrenador entrenador=new Entrenador();
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getInt("dni"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(rs.getBoolean("estado"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenadores.add(entrenador);
+            }
+            
+           ps.close();
+        }catch(SQLException ex){
+           JOptionPane.showMessageDialog(null, "Error al ingresar a la base de datos");
+           return null;
+        }
+        return entrenadores;        
+    }
+    
     public void modificarEntrenador(Entrenador entrenador){
         String sql = "UPDATE entrenador SET dni=?,nombre=?,apellido=?,especialidad=?,estado=? WHERE idEntrenador=?";
         PreparedStatement ps = null;
@@ -85,7 +112,7 @@ public class EntrenadorData {
     
     public Entrenador buscarEntrenador(int idEntrenador){
         Entrenador entrenador=null;
-        String sql = "SELECT idEntrenador, nombre, apellido, estado FROM Entrenador WHERE idEntrenador = ?";
+        String sql = "SELECT idEntrenador, nombre, apellido, estado FROM entrenador WHERE idEntrenador = ?";
         PreparedStatement ps = null;
     try {
     ps = con.prepareStatement(sql);

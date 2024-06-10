@@ -36,6 +36,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jmi_NuevoEntrenador = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -83,6 +84,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu6);
 
         jMenu4.setText("ENTRENADOR");
+
+        jmi_NuevoEntrenador.setText("Nuevo Entrenador");
+        jmi_NuevoEntrenador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_NuevoEntrenadorActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmi_NuevoEntrenador);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("SALIR");
@@ -118,6 +128,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         vls.setVisible(true);
         escritorio.add(vls);
     }//GEN-LAST:event_jmenu_ListaSociosActionPerformed
+
+    private void jmi_NuevoEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_NuevoEntrenadorActionPerformed
+       escritorio.removeAll();
+        escritorio.repaint();
+        VistaEntrenador ve= new VistaEntrenador();
+        ve.setVisible(true);
+        escritorio.add(ve);
+    }//GEN-LAST:event_jmi_NuevoEntrenadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,5 +184,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
+    private javax.swing.JMenuItem jmi_NuevoEntrenador;
     // End of variables declaration//GEN-END:variables
 }
