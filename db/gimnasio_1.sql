@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2024 a las 20:59:23
+-- Tiempo de generación: 10-06-2024 a las 05:50:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `gimnasio`
+-- Base de datos: `gimnasio_1`
 --
 
 -- --------------------------------------------------------
@@ -34,6 +34,13 @@ CREATE TABLE `asistencia` (
   `fechaAsistencia` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`idAsistencia`, `idSocio`, `idClase`, `fechaAsistencia`) VALUES
+(2, 1, 1, '2024-06-06');
+
 -- --------------------------------------------------------
 
 --
@@ -41,13 +48,20 @@ CREATE TABLE `asistencia` (
 --
 
 CREATE TABLE `clase` (
-  `idClase` int(11) NOT NULL,
+  `id_clase` int(11) NOT NULL,
   `nombre` varchar(40) NOT NULL,
   `idEntrenador` int(11) NOT NULL,
   `horario` time NOT NULL,
   `capacidad` int(30) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `clase`
+--
+
+INSERT INTO `clase` (`id_clase`, `nombre`, `idEntrenador`, `horario`, `capacidad`, `estado`) VALUES
+(1, 'Boxeo', 1, '09:28:00', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +78,13 @@ CREATE TABLE `entrenador` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `entrenador`
+--
+
+INSERT INTO `entrenador` (`idEntrenador`, `dni`, `nombre`, `apellido`, `especialidad`, `estado`) VALUES
+(1, 18544684, 'Jorge', 'Gutierrez', 'Musculacion', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +100,15 @@ CREATE TABLE `membresia` (
   `costo` decimal(10,0) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `membresia`
+--
+
+INSERT INTO `membresia` (`idMembresia`, `idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES
+(1, 1, 8, '2024-06-06', '2024-07-06', 1000, 1),
+(2, 2, 16, '2024-05-05', '2024-06-05', 1500, 1),
+(3, 1, 16, '2024-06-03', '2024-07-03', 1500, 1);
 
 -- --------------------------------------------------------
 
@@ -98,6 +128,18 @@ CREATE TABLE `socio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `socio`
+--
+
+INSERT INTO `socio` (`idSocio`, `dni`, `nombre`, `apellido`, `edad`, `correo`, `telefono`, `estado`) VALUES
+(1, 44596877, 'Gonzalo', 'Morales', 17, 'gomez@gmil.com', 260499001, 1),
+(2, 45698325, 'Roman', 'Riquelme', 68582, 'mklohiso@djhkh.com', 45698, 1),
+(3, 20994454, 'Carlos', 'Montaner', 23, 'vivanlasvegas@gmil.co', 266548699, 0),
+(4, 20994457, 'Carlos', 'de la Torre', 23, 'CarlitosPerez@hotmail.com', 266587984, 1),
+(9, 456987, 'Jose', 'Garces', 22, 'sjkodafoi@gmail.com', 1234657, 0),
+(12, 45698321, 'hola', 'sad', 17, 'asdas@gmlo.com', 26641, 1);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -113,7 +155,7 @@ ALTER TABLE `asistencia`
 -- Indices de la tabla `clase`
 --
 ALTER TABLE `clase`
-  ADD PRIMARY KEY (`idClase`),
+  ADD PRIMARY KEY (`id_clase`),
   ADD KEY `idEntrenador` (`idEntrenador`);
 
 --
@@ -146,31 +188,31 @@ ALTER TABLE `socio`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
-  MODIFY `idClase` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_clase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `entrenador`
 --
 ALTER TABLE `entrenador`
-  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `membresia`
 --
 ALTER TABLE `membresia`
-  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `socio`
 --
 ALTER TABLE `socio`
-  MODIFY `idSocio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSocio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -180,7 +222,7 @@ ALTER TABLE `socio`
 -- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`),
+  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`id_clase`),
   ADD CONSTRAINT `asistencia_ibfk_2` FOREIGN KEY (`idSocio`) REFERENCES `socio` (`idSocio`);
 
 --
