@@ -35,6 +35,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jmi_NuevaClase = new javax.swing.JMenuItem();
+        jmi_ListaDeClases = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmi_NuevoEntrenador = new javax.swing.JMenuItem();
@@ -89,6 +90,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jmi_NuevaClase);
+
+        jmi_ListaDeClases.setText("Lista de Clases");
+        jmi_ListaDeClases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_ListaDeClasesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmi_ListaDeClases);
 
         jMenuBar1.add(jMenu3);
 
@@ -186,6 +195,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         escritorio.add(vnc);
     }//GEN-LAST:event_jmi_NuevaClaseActionPerformed
 
+    private void jmi_ListaDeClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_ListaDeClasesActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaListaClases vlc= new VistaListaClases();
+        vlc.setVisible(true);
+        escritorio.add(vlc);
+    }//GEN-LAST:event_jmi_ListaDeClasesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,6 +251,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
+    private javax.swing.JMenuItem jmi_ListaDeClases;
     private javax.swing.JMenuItem jmi_ListaEntrenadores;
     private javax.swing.JMenuItem jmi_NuevaClase;
     private javax.swing.JMenuItem jmi_NuevoEntrenador;

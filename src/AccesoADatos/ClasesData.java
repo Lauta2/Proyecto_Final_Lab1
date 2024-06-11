@@ -67,6 +67,8 @@ public class ClasesData {
         return clase;
     }
     
+
+    
     public List<Integer> listarIDPresentesAhora(Clase clase){
         List<Integer> presentes=new ArrayList<>();
         String sql="SELECT asistencia.idSocio FROM asistencia JOIN clase ON (asistencia.idClase=clase.id_clase) WHERE clase.id_clase=?";
