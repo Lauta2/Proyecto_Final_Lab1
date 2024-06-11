@@ -5,9 +5,9 @@
         <group>
             <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaPrincipal.java</file>
             <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaNuevaClase.java</file>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/AccesoADatos/ClasesData.java</file>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/AccesoADatos/EntrenadorData.java</file>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Entidades/Clase.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaHistorialMembresias.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Entidades/Membresia.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaInscripcionSocioAClase.java</file>
         </group>
     </open-files>
 </project-private>
