@@ -63,10 +63,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Socio");
 
-        jLabel2.setText("ID");
+        jLabel2.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel2.setText("Numero de Socio");
 
         jLabel3.setText("Nombre");
 
+        jb_Buscar.setForeground(new java.awt.Color(0, 153, 51));
         jb_Buscar.setText("Buscar");
         jb_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +76,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(0, 153, 0));
         jLabel4.setText("DNI");
 
         jLabel5.setText("Apellido");
@@ -119,7 +122,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(203, 203, 203)
@@ -233,8 +236,66 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jb_SalirActionPerformed
 
     private void jb_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_BuscarActionPerformed
-        int id;
+    int id;
+    int dni;
+
+    // Primero intentar buscar por ID
+    if (!jt_ID.getText().equals("")) {
+        try {
+            id = Integer.parseInt(jt_ID.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID es un Numero entero!");
+            return;
+        }
+
+        socio = socioData.buscarSocioID(id);
+        if (socio != null) {
+            llenarCamposSocio(socio);
+            jt_ID.setEnabled(false);
+            return;
+        }
+    }
+
+    // Si no se encuentra por ID, intentar buscar por DNI
+    if (!jt_DNI.getText().equals("")) {
+        try {
+            dni = Integer.parseInt(jt_DNI.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El DNI es un Numero entero!");
+            return;
+        }
+
+        socio = socioData.buscarSocioDNI(dni);
+        if (socio != null) {
+            llenarCamposSocio(socio);
+            jt_ID.setEnabled(false);
+            return;
+        }
+    }
+
+    // Si no se encuentra ni por ID ni por DNI, mostrar mensaje
+    JOptionPane.showMessageDialog(this, "Socio no encontrado!");
+}
+
+// Metodo auxiliar para llenar los campos del formulario con los datos del socio
+private void llenarCamposSocio(Socio socio) {
+    jt_DNI.setText(String.valueOf(socio.getDni()));
+    jt_Nombre.setText(socio.getNombre());
+    jt_Apellido.setText(socio.getApellido());
+    jt_Edad.setText(String.valueOf(socio.getEdad()));
+    jcb_Estado.setSelected(socio.isEstado());
+    jt_Email.setText(socio.getCorreo());
+    jt_Telefono.setText(String.valueOf(socio.getTelefono()));
+    jt_ID.setText(String.valueOf(socio.getIdSocio()));
+
+        
+        
+        
+        
+        
+        /*int id;
         ArrayList<Socio> socios = new ArrayList<>();
+        
         if (!jt_ID.getText().equals("")) {
             try {
                 id = Integer.parseInt(jt_ID.getText());
@@ -276,7 +337,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 jt_ID.disable();
             }
             
-        }
+        }*/
 
     }//GEN-LAST:event_jb_BuscarActionPerformed
 
