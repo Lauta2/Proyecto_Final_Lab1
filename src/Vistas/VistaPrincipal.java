@@ -34,6 +34,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jmenu_ListaSocios = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jmi_NuevaClase = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jmi_NuevoEntrenador = new javax.swing.JMenuItem();
@@ -49,11 +50,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         jMenu1.setText("SOCIO");
@@ -80,6 +81,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("CLASE");
+
+        jmi_NuevaClase.setText("Nueva Clase");
+        jmi_NuevaClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_NuevaClaseActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmi_NuevaClase);
+
         jMenuBar1.add(jMenu3);
 
         jMenu6.setText("MEMBRESIA");
@@ -168,6 +178,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
        System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jmi_NuevaClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_NuevaClaseActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaNuevaClase vnc= new VistaNuevaClase();
+        vnc.setVisible(true);
+        escritorio.add(vnc);
+    }//GEN-LAST:event_jmi_NuevaClaseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -217,6 +235,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
     private javax.swing.JMenuItem jmi_ListaEntrenadores;
+    private javax.swing.JMenuItem jmi_NuevaClase;
     private javax.swing.JMenuItem jmi_NuevoEntrenador;
     // End of variables declaration//GEN-END:variables
 }

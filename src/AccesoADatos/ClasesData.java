@@ -6,6 +6,7 @@ package AccesoADatos;
 
 import Entidades.Clase;
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -83,6 +84,26 @@ public class ClasesData {
         }
         return presentes;
     }
+    
+    public List<Time> listarHorariosXEntrenador(int idEntrenador){
+            List<Time> horas = new ArrayList<>();
+    String sql="SELECT clase.horario FROM clase JOIN entrenador ON (clase.idEntrenador=entrenador.idEntrenador) WHERE entrenador.idEntrenador =? AND clase.estado=1";
+    try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEntrenador);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Time hora;
+                hora=rs.getTime("horario");
+                horas.add(hora);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Clase: " + ex.getMessage());
+        }
+        return horas;
+    
+}
 
     public List<Clase> listarClases() {
         List<Clase> clases = new ArrayList<>();

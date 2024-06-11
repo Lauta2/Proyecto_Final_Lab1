@@ -292,6 +292,7 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
     private void jb_LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_LimpiarActionPerformed
         jt_PrimerValor.setText("");
         jt_SegundoValor.setText("");
+        listar();
     }//GEN-LAST:event_jb_LimpiarActionPerformed
 
     private void jt_PrimerValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jt_PrimerValorKeyReleased

@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaListaSocios.java</file>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaSocio.java</file>
-            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/AccesoADatos/SocioData.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaPrincipal.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/Vistas/VistaListaEntrenadores.java</file>
+            <file>file:/J:/Doc-HDD/Lab1/Practica/Proyecto_Final_Lab1/src/AccesoADatos/EntrenadorData.java</file>
         </group>
     </open-files>
 </project-private>
