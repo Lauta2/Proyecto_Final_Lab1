@@ -41,7 +41,7 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
     filacabecera.add("Nombre");
     filacabecera.add("Apellido");
     filacabecera.add("Especialidad");
-    filacabecera.add("Estado");
+    filacabecera.add("Activo");
     for(Object it:filacabecera){
     tabla.addColumn(it);
     }
@@ -66,6 +66,7 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
     
     private void listar(){
         borrarFilas();
+        String estado=null;
         entrenadores = entrenadorData.listarEntrenadores();
         //SI EL COMBOBOX ESTA EN TODOS MUESTRA TODOS LOS ENTRENADORES
         if (jcb_ComboTipo.getSelectedItem().toString().equalsIgnoreCase("Todos")) {
@@ -74,7 +75,8 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
             jt_PrimerValor.disable();
             jt_SegundoValor.disable();
             for (Entrenador entrenador : entrenadores) {
-                tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                estado=siOno(entrenador.isEstado());
+                tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
             }
         //SI EL COMBOBOX ESTA EN "Nombre y/o Apellido" FILTA POR NOMBRE Y/O APELLIDO
         } else if (jcb_ComboTipo.getSelectedItem().toString().equalsIgnoreCase("Nombre y/o Apellido")) {
@@ -86,27 +88,31 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
             //FILTRO TODOS
             if (jt_PrimerValor.getText().equals("") && jt_SegundoValor.getText().equals("")) {
                 for (Entrenador entrenador : entrenadores) {
-                    tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                    estado=siOno(entrenador.isEstado());
+                    tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
                 }
             //FILTRO POR NOMBRE
             } else if (!jt_PrimerValor.getText().equals("") && jt_SegundoValor.getText().equals("")){
                 for (Entrenador entrenador : entrenadores) {
                     if (entrenador.getNombre().toLowerCase().contains(jt_PrimerValor.getText().toLowerCase())) {
-                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                        estado=siOno(entrenador.isEstado());
+                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
                     }
                 }
             //FILTRO POR APELLIDO    
             } else if(jt_PrimerValor.getText().equals("") && !jt_SegundoValor.getText().equals("")){
                 for (Entrenador entrenador : entrenadores) {
                     if (entrenador.getApellido().toLowerCase().contains(jt_SegundoValor.getText().toLowerCase())) {
-                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                        estado=siOno(entrenador.isEstado());
+                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
                     }
                 }
             //FILTRO POR NOMBRE Y APELLIDO    
             } else{
                 for (Entrenador entrenador : entrenadores) {
                     if (entrenador.getNombre().toLowerCase().contains(jt_PrimerValor.getText().toLowerCase()) && entrenador.getApellido().toLowerCase().contains(jt_SegundoValor.getText().toLowerCase())) {
-                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                        estado=siOno(entrenador.isEstado());
+                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
                     }
                 }
             }
@@ -118,9 +124,19 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
             jt_SegundoValor.disable();
             for (Entrenador entrenador : entrenadores) {
                     if (entrenador.getEspecialidad().toLowerCase().contains(jt_PrimerValor.getText().toLowerCase())) {
-                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), entrenador.isEstado()});
+                        estado=siOno(entrenador.isEstado());
+                        tabla.addRow(new Object[]{entrenador.getIdEntrenador(), entrenador.getDni(), entrenador.getNombre(), entrenador.getApellido(), entrenador.getEspecialidad(), estado});
                     }
                 }
+        }
+    }
+    
+    
+    private String siOno(boolean valor){
+        if(valor){
+            return "si";
+        }else{
+            return "no";
         }
     }
 
@@ -312,13 +328,24 @@ public class VistaListaEntrenadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jt_SegundoValorKeyReleased
 
     private void jb_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_GuardarActionPerformed
-    for (int row = 0; row < tabla.getRowCount(); row++) {
+        boolean estado=true;
+        for (int row = 0; row < tabla.getRowCount(); row++) {
         int idEntrenador = (int) tabla.getValueAt(row, 0);
         int dni = (int) tabla.getValueAt(row, 1);
         String nombre = (String) tabla.getValueAt(row, 2);
         String apellido = (String) tabla.getValueAt(row, 3);
         String especialidad = (String) tabla.getValueAt(row, 4);
-        boolean estado = (boolean) tabla.getValueAt(row, 5);
+        String estadoString = (String) tabla.getValueAt(row, 5);
+        if(!(estadoString.equalsIgnoreCase("si") || estadoString.equalsIgnoreCase("no"))){
+            JOptionPane.showMessageDialog(this, "El valor de Activo tiene ser \"SI\" o \"NO\"", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{
+            if(estadoString.equalsIgnoreCase("si")){
+                estado=true;
+            }else if(estadoString.equalsIgnoreCase("no")){
+                estado=false;
+            }
+        }
       
         Entrenador entrenador = new Entrenador(idEntrenador, dni, nombre, apellido, especialidad, estado);
        
