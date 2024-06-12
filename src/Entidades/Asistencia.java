@@ -13,6 +13,8 @@ public class Asistencia {
     public Asistencia() {
     }
 
+    
+    
     public Asistencia(Socio socio, Clase clase, LocalDate fechaAsistencia) {
         this.socio = socio;
         this.clase = clase;

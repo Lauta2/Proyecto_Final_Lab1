@@ -63,6 +63,24 @@ public class MembresiaData {
             JOptionPane.showMessageDialog(null, "Error al modificar la membresia: " + ex.getMessage());
         }
     }
+    
+    public void usarMembresia(int idMembresia) {
+        String sql = "UPDATE membresia SET cantidadPases=cantidadPases-1 WHERE idMembresia=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMembresia);
+            
+            int success = ps.executeUpdate();
+            if (success == 1) {
+                JOptionPane.showMessageDialog(null, "MembresiaUsada.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la membresia para modificar.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al modificar la membresia: " + ex.getMessage());
+        }
+    }
 
     public Membresia buscarMembresia(int idMembresia) {
         Membresia membresia = null;
@@ -89,6 +107,7 @@ public class MembresiaData {
         }
         return membresia;
     }
+    
 
     public List<Membresia> listarMembresias() {
         List<Membresia> membresias = new ArrayList<>();

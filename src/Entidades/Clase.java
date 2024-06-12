@@ -80,7 +80,8 @@ public class Clase {
 
     @Override
     public String toString() {
-        return "Clase{" + "idClase=" + idClase + ", nombre=" + nombre + ", entrenador=" + entrenador + ", horario=" + horario + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+//        return "Clase{" + "idClase=" + idClase + ", nombre=" + nombre + ", entrenador=" + entrenador + ", horario=" + horario + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+        return nombre+" - "+entrenador+" - "+horario+" - "+capacidad+" - "+idClase;
     }
     
     

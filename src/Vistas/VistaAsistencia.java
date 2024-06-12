@@ -6,11 +6,17 @@ package Vistas;
 
 import AccesoADatos.AsistenciaData;
 import AccesoADatos.ClasesData;
+import AccesoADatos.InscripcionData;
+import AccesoADatos.MembresiaData;
 import AccesoADatos.SocioData;
 import Entidades.Asistencia;
 import Entidades.Clase;
+import Entidades.Membresia;
 import Entidades.Socio;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -18,9 +24,13 @@ import java.util.ArrayList;
  */
 public class VistaAsistencia extends javax.swing.JInternalFrame {
     AsistenciaData asistenciaData;
+    InscripcionData inscripcionData;
     ClasesData claseData;
     SocioData socioData;
-    ArrayList<Clase> clases=null;
+    MembresiaData membresiaData;
+    List<Clase> clases;
+    int claseA;
+    int socioA;
     /**
      * Creates new form VistaAsistencia
      */
@@ -29,23 +39,55 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
         asistenciaData=new AsistenciaData();
         socioData=new SocioData();
         claseData=new ClasesData();
-        
+        inscripcionData=new InscripcionData();
+        membresiaData=new MembresiaData();
+        marcarFecha();
+        actualizarMembresias();
+        cargarCombo();
+        cargaSocios();
     }
 
     
     
     
     private void cargarCombo(){
-    clases=(ArrayList<Clase>) claseData.listarClases();
+    clases=(List<Clase>)claseData.listarClases();
         for (Clase clase : clases) {
-            jcb_ComboClase.addItem(" "+clase.getNombre());
-            
-        }
-    
-    
+            jcb_ComboClase.addItem(clase.toString());
+        } 
 }
+    private void cargaSocios(){
+        jcb_Socios.removeAllItems();
+        ArrayList<Socio> sociosInscriptos=null;
+        int idClase=-1;
+        String elegida=(String) jcb_ComboClase.getSelectedItem();
+        for (Clase clase : clases) {     
+            if(clase.toString().equals(elegida)){
+                idClase=clase.getIdClase();
+                claseA=idClase;
+            }
+        }
+        sociosInscriptos=(ArrayList<Socio>) inscripcionData.listarSociosInscriptos(idClase);
+        for (Socio sociosInscripto : sociosInscriptos) {
+          jcb_Socios.addItem(sociosInscripto.toString());
+          socioA=sociosInscripto.getIdSocio();
+        }
+    }
     
+    private void actualizarMembresias(){
+        List<Socio> socios=socioData.listarSocios();
+        for (Socio socio : socios) {
+          socioData.membresiaActiva(socio.getIdSocio());  
+        }
+        
+    }
     
+    private void marcarFecha(){
+        LocalDate hoy=LocalDate.now();
+        jl_FechaHoy.setText(hoy.toString());
+    }
+    
+
     
     
     
@@ -66,51 +108,80 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jb_MarcarAsistencia = new javax.swing.JButton();
         jb_Salir = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jl_FechaHoy = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Chilanka", 0, 24)); // NOI18N
         jLabel1.setText("Asistencia");
+
+        jcb_ComboClase.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcb_ComboClaseItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Clase a Ingresar:");
 
         jLabel3.setText("Socio:");
 
         jb_MarcarAsistencia.setText("Marcar Asistencia");
+        jb_MarcarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_MarcarAsistenciaActionPerformed(evt);
+            }
+        });
 
         jb_Salir.setText("Salir");
+        jb_Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_SalirActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Fecha");
+
+        jl_FechaHoy.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jl_FechaHoy.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jcb_Socios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jcb_ComboClase, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jb_MarcarAsistencia)
-                        .addGap(83, 83, 83)
-                        .addComponent(jb_Salir)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jcb_Socios, 0, 576, Short.MAX_VALUE)
+                    .addComponent(jcb_ComboClase, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4)
+                .addGap(30, 30, 30)
+                .addComponent(jl_FechaHoy)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(284, 284, 284))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(jb_MarcarAsistencia)
+                .addGap(83, 83, 83)
+                .addComponent(jb_Salir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jl_FechaHoy)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcb_ComboClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -118,24 +189,55 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcb_Socios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(60, 60, 60)
+                .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_MarcarAsistencia)
                     .addComponent(jb_Salir))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcb_ComboClaseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcb_ComboClaseItemStateChanged
+        cargaSocios();
+    }//GEN-LAST:event_jcb_ComboClaseItemStateChanged
+
+    private void jb_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_SalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_jb_SalirActionPerformed
+
+    private void jb_MarcarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_MarcarAsistenciaActionPerformed
+        Asistencia asistencia=new Asistencia();
+        
+        LocalDate hoy=LocalDate.now();
+        ArrayList<Socio> sociosInscriptos = (ArrayList<Socio>) inscripcionData.listarSociosInscriptos(claseA);
+        for (Socio sociosInscripto : sociosInscriptos) {
+          jcb_Socios.addItem(sociosInscripto.toString());
+          socioA=sociosInscripto.getIdSocio();
+        }
+        List<Membresia> membresias=membresiaData.listarMembresiasPorSocio(socioA);
+        Membresia primerMembresia=membresias.get(1);//OJO ACA -------------------------------------------------
+        membresiaData.usarMembresia(primerMembresia.getIdMembresia());
+        asistencia=new Asistencia(socioData.buscarSocioID(socioA), claseData.buscarClase(claseA), hoy);
+        asistenciaData.guardarAsistencia(asistencia);
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jb_MarcarAsistenciaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jb_MarcarAsistencia;
     private javax.swing.JButton jb_Salir;
     private javax.swing.JComboBox<String> jcb_ComboClase;
     private javax.swing.JComboBox<String> jcb_Socios;
+    private javax.swing.JLabel jl_FechaHoy;
     // End of variables declaration//GEN-END:variables
 }

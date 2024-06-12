@@ -33,6 +33,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jmenu_Socio = new javax.swing.JMenuItem();
         jmenu_ListaSocios = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jmi_NuevaClase = new javax.swing.JMenuItem();
         jmi_ListaDeClases = new javax.swing.JMenuItem();
@@ -82,6 +83,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("ASISTENCIA");
+
+        jMenuItem6.setText("Asistir a Clase");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("CLASE");
@@ -261,8 +271,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
-        
+        //
     }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       escritorio.removeAll();
+        escritorio.repaint();
+        VistaAsistencia va= new VistaAsistencia();
+        va.setVisible(true);
+        escritorio.add(va);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,6 +331,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
     private javax.swing.JMenuItem jmi_ListaDeClases;
