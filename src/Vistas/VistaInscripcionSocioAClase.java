@@ -5,9 +5,16 @@
 package Vistas;
 
 import AccesoADatos.ClasesData;
+import AccesoADatos.InscripcionData;
+import AccesoADatos.SocioData;
 import Entidades.Clase;
+import Entidades.Inscripcion;
+import Entidades.Socio;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Time;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +22,8 @@ import java.util.List;
  */
 public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
     ClasesData claseData;
+    SocioData socioData;
+    InscripcionData inscripcionData;
     ArrayList<Clase> clases;
     /**
      * Creates new form VistaBusquedaClase
@@ -22,13 +31,17 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
     public VistaInscripcionSocioAClase() {
         initComponents();
         claseData=new ClasesData();
+        socioData=new SocioData();
+        inscripcionData=new InscripcionData();
         inhabilitarBotones();
-        
+        botonesDeBusqueda();
     }
     
    private void limpiarCampos(){
        jt_NombreClase.setText("");
        jt_NombreEntrenador.setText("");
+       jt_SocioDNI.setText("");
+       jcb_ComboHorarios.removeAllItems();
        jcb_ComboClase.removeAllItems();
    }
 
@@ -76,6 +89,11 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
            jcb_ComboHorarios.enable();
            jt_NombreClase.disable();
            jt_NombreEntrenador.disable();
+           
+           for (int i = 0; i < 24; i++) {
+            LocalTime hora = LocalTime.of(i, 0, 0);
+            jcb_ComboHorarios.addItem(hora.toString());
+           }
            
             
             //si Ningun RadioButton Esta Activo
@@ -155,6 +173,11 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
         jLabel7.setText("DNI Socio:");
 
         jb_Inscribirse.setText("Inscribir");
+        jb_Inscribirse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_InscribirseActionPerformed(evt);
+            }
+        });
 
         jrb_Nombre.setSelected(true);
         jrb_Nombre.setText("Nombre");
@@ -301,12 +324,43 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
                }
             }
            jcb_ComboClase.enable();
-           jcb_ComboClase.addItem((String) "Seleccione una Clase");
             for (Clase clase : clasesCombo) {
                 jcb_ComboClase.addItem(clase.toString());
             }
             habilitarBotones();
            
+            //CARGAR COMBOBOXCLASES CON NOMBRE DE ENTRENADOR
+        }else if(jrb_Entrenador.isSelected() && !jt_NombreEntrenador.getText().equals("")){
+            dato=jt_NombreEntrenador.getText();
+            clases=(ArrayList<Clase>) claseData.listarClases();
+            for (Clase clase : clases) {
+               if(clase.getEntrenador().getNombre().toLowerCase().contains(dato.toLowerCase())){
+                   clasesCombo.add(clase);
+               }
+            }
+            jcb_ComboClase.enable();
+            for (Clase clase : clasesCombo) {
+                jcb_ComboClase.addItem(clase.toString());
+            }
+            habilitarBotones(); 
+            
+            
+            //CARGAR COMBOBOXCLASES CON NOMBRE DE ENTRENADOR
+        }else if(jrb_Horario.isSelected()){
+            dato=(String) jcb_ComboHorarios.getSelectedItem();
+            Time hora2=Time.valueOf(dato+":00");
+            clases=(ArrayList<Clase>) claseData.listarClases();
+            for (Clase clase : clases) {
+               if(clase.getHorario().equals(hora2)){
+                   clasesCombo.add(clase);
+               }
+            }
+            jcb_ComboClase.enable();
+            for (Clase clase : clasesCombo) {
+                jcb_ComboClase.addItem(clase.toString());
+            }
+            habilitarBotones();
+  
         }
         
         
@@ -326,6 +380,47 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
     private void jt_NombreClaseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jt_NombreClaseKeyReleased
 
     }//GEN-LAST:event_jt_NombreClaseKeyReleased
+
+    private void jb_InscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_InscribirseActionPerformed
+        int dni;
+        if(jcb_ComboClase.getSelectedItem()==null || jt_SocioDNI.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"No se selecciono ninguna clase o no se ingreso DNI");
+            return;
+        }else{
+            try{
+                dni=Integer.parseInt(jt_SocioDNI.getText());
+            }catch(NumberFormatException ex){
+              JOptionPane.showMessageDialog(this,"EL DNI TIENE QUE SER UN NUMERO ENTERO SIN PUNTOS");
+            return;  
+            }
+            
+            Socio socio=socioData.buscarSocioDNI(dni);
+            ArrayList<Clase> clases=(ArrayList<Clase>) claseData.listarClases();
+            Clase claseInscribir=null;
+            for (Clase clase : clases) {
+                if(jcb_ComboClase.getSelectedItem().equals(clase.toString())){
+                   claseInscribir=clase; 
+                }
+            }
+            
+            ArrayList<Socio> sociosInscriptos=(ArrayList<Socio>) inscripcionData.listarSociosInscriptos(claseInscribir.getIdClase());
+            for (Socio sociosInscripto : sociosInscriptos) {
+                if(sociosInscripto.getIdSocio()==socio.getIdSocio()){
+                    JOptionPane.showMessageDialog(this,"SOCIO YA HA SIDO INSCRIPTO ANTES!");
+                    return;
+                }
+            }
+            
+            Inscripcion inscripcion=new Inscripcion(socio.getIdSocio(), claseInscribir.getIdClase(), true);
+            JOptionPane.showMessageDialog(this,"INSCRIPTO CON EXITO!");
+            inhabilitarBotones();
+            botonesDeBusqueda();
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_jb_InscribirseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
