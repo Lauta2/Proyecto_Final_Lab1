@@ -42,17 +42,20 @@ public class AsistenciaData {
         }
     }
     
-    public int cantidadPresentes(int idClase ,LocalDate fechaAsistencia){
+
+    
+    
+    public List<Integer> sociosIDPresentes(int idClase ,LocalDate fechaAsistencia){
         Date fecha=Date.valueOf(fechaAsistencia);
-        int presentes=-1;
-        String sql="SELECT COUNT(asistencia.idSocio) FROM asistencia JOIN socio ON(asistencia.idSocio=socio.idSocio) WHERE idClase=? AND fechaAsistencia=? AND socio.estado=1";
+        List<Integer> presentes=null;
+        String sql="SELECT asistencia.idSocio FROM asistencia WHERE idClase=? AND fechaAsistencia=?";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idClase);
             ps.setDate(2, fecha);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-               presentes=rs.getInt(1);
+            while(rs.next()) {
+               presentes.add(rs.getInt(1));
             }
             ps.close();
         }catch(SQLException ex){

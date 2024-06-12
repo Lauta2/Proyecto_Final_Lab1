@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,12 +56,14 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
         for (Clase clase : clases) {
             jcb_ComboClase.addItem(clase.toString());
         } 
+        
 }
     private void cargaSocios(){
         jcb_Socios.removeAllItems();
         ArrayList<Socio> sociosInscriptos=null;
         int idClase=-1;
         String elegida=(String) jcb_ComboClase.getSelectedItem();
+        clases=(List<Clase>)claseData.listarClases();
         for (Clase clase : clases) {     
             if(clase.toString().equals(elegida)){
                 idClase=clase.getIdClase();
@@ -70,7 +73,6 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
         sociosInscriptos=(ArrayList<Socio>) inscripcionData.listarSociosInscriptos(idClase);
         for (Socio sociosInscripto : sociosInscriptos) {
           jcb_Socios.addItem(sociosInscripto.toString());
-          socioA=sociosInscripto.getIdSocio();
         }
     }
     
@@ -214,11 +216,22 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
         ArrayList<Socio> sociosInscriptos = (ArrayList<Socio>) inscripcionData.listarSociosInscriptos(claseA);
         for (Socio sociosInscripto : sociosInscriptos) {
           jcb_Socios.addItem(sociosInscripto.toString());
-          socioA=sociosInscripto.getIdSocio();
+//          socioA=sociosInscripto.getIdSocio();
         }
+        
+        
         List<Membresia> membresias=membresiaData.listarMembresiasPorSocio(socioA);
-        Membresia primerMembresia=membresias.get(1);//OJO ACA -------------------------------------------------
+        Membresia primerMembresia=membresias.get(1);
         membresiaData.usarMembresia(primerMembresia.getIdMembresia());
+        List<Integer> presentes=asistenciaData.sociosIDPresentes(claseA, hoy);
+        for (Integer presente : presentes) {
+            if(socioA==presente){
+                JOptionPane.showMessageDialog(this, "SOCIO YA DIO EL PRESENTE!");
+                return;
+            }
+        }
+        
+        
         asistencia=new Asistencia(socioData.buscarSocioID(socioA), claseData.buscarClase(claseA), hoy);
         asistenciaData.guardarAsistencia(asistencia);
         
