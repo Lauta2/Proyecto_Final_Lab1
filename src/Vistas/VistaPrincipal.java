@@ -39,6 +39,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jmi_NuevoEntrenador = new javax.swing.JMenuItem();
         jmi_ListaEntrenadores = new javax.swing.JMenuItem();
@@ -112,6 +113,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu6.setText("MEMBRESIA");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
 
         jMenuItem4.setText("Registro de Membresia");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +126,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu6.add(jMenuItem4);
+
+        jMenuItem5.setText("Historial de Membresia");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem5);
 
         jMenuBar1.add(jMenu6);
 
@@ -238,6 +252,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
         escritorio.add(vm);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        ////
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaHistorialMembresias vhm= new VistaHistorialMembresias();
+        vhm.setVisible(true);
+        escritorio.add(vhm);
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -286,6 +312,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
     private javax.swing.JMenuItem jmi_ListaDeClases;

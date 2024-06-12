@@ -11,8 +11,6 @@ import Entidades.Entrenador;
 import java.util.List;
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
@@ -56,12 +54,12 @@ public class VistaNuevaClase extends javax.swing.JInternalFrame {
     private void cargarComboHorarios() {
     jcb_HorarioClase.removeAllItems();
     Set<Time> horasTotal = new TreeSet<>((t1, t2) -> {
-        // Comparar las horas en formato HH:mm:ss
+        // 1ro Comparar las horas
         return t1.toString().compareTo(t2.toString());
     });
     int idEntrenador = 0;
 
-    // Obtener el entrenador seleccionado
+    //2do Obtener el entrenador seleccionado
     String entrenadorCombo = (String) jcb_ComboEntrenador.getSelectedItem();
     for (Entrenador entrenador : entrenadores) {
         if (entrenador.toString().equalsIgnoreCase(entrenadorCombo)) {
@@ -70,17 +68,17 @@ public class VistaNuevaClase extends javax.swing.JInternalFrame {
         }
     }
 
-    // Obtener los horarios asignados al entrenador
+    //3ro Obtener los horarios asignados al entrenador
     List<Time> horasSI = claseData.listarHorariosXEntrenador(idEntrenador);
 
-    // Generar todas las horas del día y agregarlas al conjunto ordenado
+    //4to Generar todas las horas del día y agregarlas al conjunto ordenado
     for (int i = 0; i < 24; i++) {
         LocalTime hora = LocalTime.of(i, 0, 0);
         Time hora2 = Time.valueOf(hora);
         horasTotal.add(hora2);
     }
 
-    // Agregar las horas disponibles al ComboBox
+    //5to Agregar las horas disponibles al ComboBox
     for (Time hora : horasTotal) {
         if (!horasSI.contains(hora)) {
             jcb_HorarioClase.addItem(hora.toString());
