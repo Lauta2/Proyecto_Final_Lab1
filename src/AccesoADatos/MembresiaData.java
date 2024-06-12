@@ -137,7 +137,29 @@ public class MembresiaData {
     
     
     
-    
+            public List<Membresia> listarMembresiasPorSocio(int idSocio) {
+        List<Membresia> membresiasDelSocio = new ArrayList<>();
+        String sql = "SELECT * FROM membresia WHERE idSocio = ? AND estado = 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Membresia membresia = new Membresia();
+                membresia.setIdMembresia(rs.getInt("idMembresia"));
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
+                membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                membresia.setCosto(rs.getDouble("costo"));
+                membresia.setEstado(rs.getBoolean("estado"));
+                membresiasDelSocio.add(membresia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener membresías del socio: " + ex.getMessage());
+        }
+        return membresiasDelSocio;
+    }
     
     
     
