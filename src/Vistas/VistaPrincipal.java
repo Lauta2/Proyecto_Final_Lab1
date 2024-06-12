@@ -59,7 +59,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
 
         jMenu1.setText("SOCIO");

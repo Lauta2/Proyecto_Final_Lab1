@@ -66,6 +66,7 @@ public class ClasesData {
         }
         return clase;
     }
+    
      public ArrayList<Clase> BuscarClaseXNombre(String nombre){
      ArrayList<Clase> clases=new ArrayList<>();
      String sql="SELECT * FROM clase WHERE nombre=?";
