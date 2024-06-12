@@ -66,6 +66,29 @@ public class ClasesData {
         }
         return clase;
     }
+     public ArrayList<Clase> BuscarClaseXNombre(String nombre){
+     ArrayList<Clase> clases=new ArrayList<>();
+     String sql="SELECT * FROM clase WHERE nombre=?";
+          try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+            Clase clas=new Clase();
+            clas.setIdClase(rs.getInt(1));
+            clas.setNombre(rs.getString(2));
+            clas.setEntrenador(new EntrenadorData().buscarEntrenador(rs.getInt(3)));
+            clas.setHorario(rs.getTime(4));
+            clas.setCapacidad(rs.getInt(5));
+            clas.setEstado(rs.getBoolean(6));
+            clases.add(clas);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar el nombre");
+        }
+        return clases;
+    }
     
 
     
