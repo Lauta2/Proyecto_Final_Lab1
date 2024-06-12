@@ -36,28 +36,18 @@
                                   <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jbSalir" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jbSalir" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jtPases" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                                  <Component id="jcbSocio" min="-2" pref="254" max="-2" attributes="0"/>
-                                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="jdcFechaInicio" alignment="0" pref="180" max="32767" attributes="0"/>
-                                                      <Component id="jdcFechaFin" alignment="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jtPases" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="jcbSocio" min="-2" pref="254" max="-2" attributes="0"/>
+                                          <Component id="jdcFechaFin" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jl_FechaHoy" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -70,6 +60,11 @@
                   </Group>
               </Group>
               <EmptySpace pref="45" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,11 +83,11 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <Component id="jdcFechaInicio" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jl_FechaHoy" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jdcFechaFin" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -146,8 +141,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jtPases">
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jdcFechaInicio">
-    </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jdcFechaFin">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -190,6 +183,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtCosto">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jl_FechaHoy">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="hoy"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

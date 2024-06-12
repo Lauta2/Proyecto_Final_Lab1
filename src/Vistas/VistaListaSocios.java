@@ -38,14 +38,14 @@ public class VistaListaSocios extends javax.swing.JInternalFrame {
     
     private void armarCabeceras(){
         ArrayList<Object> filaCabecera = new ArrayList<>();
-        modelo.addColumn("ID");
+        modelo.addColumn("N° Socio");
         modelo.addColumn("DNI");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");
         modelo.addColumn("Edad");
         modelo.addColumn("Correo");
         modelo.addColumn("Telefono");
-        modelo.addColumn("Estado");
+        modelo.addColumn("Activo");
         for(Object it: filaCabecera){
             modelo.addColumn(it);
         }
@@ -58,34 +58,46 @@ public class VistaListaSocios extends javax.swing.JInternalFrame {
             modelo.removeRow(f);
         }
     }
+    private String siOno(boolean valor){
+        if(valor){
+            return "si";
+        }else{
+            return "no";
+        }
+    }
     
     private void listaSocios(){
         borrarFilas();
+        
         socios=(ArrayList<Socio>) socioData.listarSocios();
         if(jrb_Activos.isSelected()){
         for(Socio s: socios){
+        String estado=siOno(s.isEstado());
             if(s.isEstado()){
-        modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
+        modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),estado});
             }
         }
         }else{
             for(Socio s: socios){
-        modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
+        String estado=siOno(s.isEstado());
+        modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),estado});
         }
         }
     }
     
     private void busqueda(){
         borrarFilas();
+        
         if(jt_BuscarXNombre.getText().equalsIgnoreCase("")){
      listaSocios();
     }else{
         socios=(ArrayList<Socio>) socioData.listarSocios();
             for (Socio s: socios) {
+                String estado=siOno(s.isEstado());
                 if(s.getNombre().toLowerCase().contains(jt_BuscarXNombre.getText().toLowerCase()) && !jrb_Activos.isSelected()){
-                    modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
+                    modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),estado});
                 }else if(s.getNombre().toLowerCase().contains(jt_BuscarXNombre.getText().toLowerCase()) && jrb_Activos.isSelected() && jrb_Activos.isSelected()==s.isEstado()){
-                    modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),s.isEstado()});
+                    modelo.addRow(new Object[]{s.getIdSocio(),s.getDni(),s.getNombre(),s.getApellido(),s.getEdad(),s.getCorreo(),s.getTelefono(),estado});
                 }
             }
         }
