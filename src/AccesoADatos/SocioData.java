@@ -181,6 +181,30 @@ public class SocioData {
         }
         return socios;
     }
+    public List<Socio> listarSociosActivos() {
+        List<Socio> socios = new ArrayList<>();
+        String sql = "SELECT * FROM Socio WHERE estado=1";
+        try {
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Socio socio = new Socio();
+                socio.setIdSocio(resultSet.getInt("idSocio"));
+                socio.setDni(resultSet.getInt("dni"));
+                socio.setNombre(resultSet.getString("nombre"));
+                socio.setApellido(resultSet.getString("apellido"));
+                socio.setEdad(resultSet.getInt("edad"));
+                socio.setCorreo(resultSet.getString("correo"));
+                socio.setTelefono(resultSet.getInt("telefono"));
+                socio.setEstado(resultSet.getBoolean("estado"));
+                socios.add(socio);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los socios: " + ex.getMessage());
+        }
+        return socios;
+    }
 
     public void modificarSocio(Socio socio) {
         String sql = "UPDATE Socio SET dni = ?, nombre = ?, apellido = ?, edad = ?, correo = ?, telefono = ?, estado = ? WHERE idSocio = ?";

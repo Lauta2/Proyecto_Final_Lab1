@@ -7,6 +7,7 @@ import AccesoADatos.MembresiaData;
 import AccesoADatos.SocioData;
 import Entidades.Membresia;
 import Entidades.Socio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -17,70 +18,64 @@ import javax.swing.table.DefaultTableModel;
     private final SocioData socioData;
     private final MembresiaData membresiaData;
     private List<Socio> socios;
+    private DefaultTableModel tabla= new DefaultTableModel(){ 
+    public boolean isCellEditable(int f,int c){
+        return false;
+        }
+    };
 
     public VistaHistorialMembresias() {
         initComponents();
         socioData = new SocioData();
         membresiaData = new MembresiaData();
-        cargarVista();
+          actualizarMembresias();
+          armarCabecera();
+          cargarCombo();
     }
 
-    private void cargarVista() {
-        cargarComboSocio();
-        mostrarHistorialMembresias();
-    }
+    
 
-    private void cargarComboSocio() {
-        socios = socioData.listarSocios();
-        jcb_Socios.removeAllItems();
-        jcb_Socios.addItem("Todos");
+
+
+
+
+    private void armarCabecera(){
+    ArrayList<Object>filacabecera=new ArrayList<>();
+    filacabecera.add("N° Membresia");
+    filacabecera.add("Pases Restantes");
+    filacabecera.add("Fecha Inicio");
+    filacabecera.add("Fecha Vencimiento");
+    filacabecera.add("Costo");
+    filacabecera.add("Estado");
+    for(Object it:filacabecera){
+    tabla.addColumn(it);
+    }
+    jt_TablaMembresia.setModel(tabla);
+    }
+    
+    private void cargarCombo(){
+        String item1="Todos";
+        socios = socioData.listarSociosActivos();
+        jcb_Socios.addItem(item1);
         for (Socio socio : socios) {
-            jcb_Socios.addItem(socio.getNombre());
+            jcb_Socios.addItem(socio.toString());
         }
     }
-
-    private void mostrarHistorialMembresias() {
-        int indiceSeleccionado = jcb_Socios.getSelectedIndex();
-        if (indiceSeleccionado == 0) {
-            mostrarTodasLasMembresias();
-        } else {
-            Socio socioSeleccionado = socios.get(indiceSeleccionado - 1);
-            mostrarMembresiasPorSocio(socioSeleccionado.getIdSocio());
+    
+    private void borrarFilas(){
+        int filas=tabla.getRowCount()-1;        
+        for (int f = filas; f >= 0; f--) {
+            tabla.removeRow(f);
         }
     }
-
-    private void mostrarTodasLasMembresias() {
-        List<Membresia> membresias = membresiaData.listarMembresias();
-        mostrarMembresiasEnTabla(membresias);
-    }
-
- private void mostrarMembresiasPorSocio(int idSocio) {
-    boolean activa = socioData.membresiaActiva(idSocio);
-    if (activa) {
-        List<Membresia> membresiasDelSocio = membresiaData.listarMembresiasPorSocio(idSocio);
-        mostrarMembresiasEnTabla(membresiasDelSocio);
-    } else {
-   
-      
-        limpiarTabla();
-    }
-}
-
-
-private void limpiarTabla() {
-    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-    modelo.setRowCount(0);
-}
-    private void mostrarMembresiasEnTabla(List<Membresia> membresias) {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID");
-        modelo.addColumn("Cantidad de Pases");
-        modelo.addColumn("Fecha de Inicio");
-        modelo.addColumn("Fecha de Fin");
-        modelo.addColumn("Costo");
-        modelo.addColumn("Estado");
+    
+    private void mostrarMembresiasEnTabla() {
+        int idSocio=-1;
+        String elegido=(String) jcb_Socios.getSelectedItem();
+        if(elegido.equals("Todos")){
+            List<Membresia> membresias=membresiaData.listarMembresias();
         for (Membresia membresia : membresias) {
-            modelo.addRow(new Object[]{
+            tabla.addRow(new Object[]{
                     membresia.getIdMembresia(),
                     membresia.getCantidadPases(),
                     membresia.getFechaInicio(),
@@ -89,10 +84,34 @@ private void limpiarTabla() {
                     membresia.isEstado() ? "Activa" : "Inactiva"
             });
         }
-        jTable1.setModel(modelo);
+        }else{
+        for (Socio socio : socios) {
+            if(socio.toString().equals(elegido)){
+                idSocio=socio.getIdSocio();
+            }
+        }
+        
+        List<Membresia> membresias=membresiaData.listarMembresiasPorSocio(idSocio);
+        for (Membresia membresia : membresias) {
+            tabla.addRow(new Object[]{
+                    membresia.getIdMembresia(),
+                    membresia.getCantidadPases(),
+                    membresia.getFechaInicio(),
+                    membresia.getFechaFin(),
+                    membresia.getCosto(),
+                    membresia.isEstado() ? "Activa" : "Inactiva"
+            });
+        }
+        }
     }
-
-
+    
+    private void actualizarMembresias(){
+        List<Socio> socios=socioData.listarSocios();
+        for (Socio socio : socios) {
+          socioData.membresiaActiva(socio.getIdSocio());  
+        }
+        
+    }
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -102,14 +121,20 @@ private void limpiarTabla() {
         jcb_Socios = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jt_TablaMembresia = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Historial de Membresias");
 
+        jcb_Socios.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcb_SociosItemStateChanged(evt);
+            }
+        });
+
         jLabel2.setText("Seleccione Socio:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jt_TablaMembresia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -120,7 +145,7 @@ private void limpiarTabla() {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jt_TablaMembresia);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +161,7 @@ private void limpiarTabla() {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(309, 309, 309)
                                 .addComponent(jLabel2)))
-                        .addGap(0, 208, Short.MAX_VALUE))
+                        .addGap(0, 290, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,12 +186,17 @@ private void limpiarTabla() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcb_SociosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcb_SociosItemStateChanged
+        borrarFilas();
+        mostrarMembresiasEnTabla();
+    }//GEN-LAST:event_jcb_SociosItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcb_Socios;
+    private javax.swing.JTable jt_TablaMembresia;
     // End of variables declaration//GEN-END:variables
 }
