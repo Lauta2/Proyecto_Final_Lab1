@@ -6,7 +6,11 @@ package AccesoADatos;
 
 import Entidades.Asistencia;
 import Entidades.Clase;
+import Entidades.Socio;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +41,45 @@ public class AsistenciaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Clase: " + ex.getMessage());
         }
     }
+    
+    public int cantidadPresentes(int idClase ,LocalDate fechaAsistencia){
+        Date fecha=Date.valueOf(fechaAsistencia);
+        int presentes=-1;
+        String sql="SELECT COUNT(asistencia.idSocio) FROM asistencia JOIN socio ON(asistencia.idSocio=socio.idSocio) WHERE idClase=? AND fechaAsistencia=? AND socio.estado=1";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idClase);
+            ps.setDate(2, fecha);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+               presentes=rs.getInt(1);
+            }
+            ps.close();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al Buscar Presentes!");
+        }
+        return presentes;  
+    }
+    
+    public List<Socio> sociosDeClase(int idClase){
+        List<Socio> socios=new ArrayList<>();
+        String sql="SELECT * FROM ";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idClase);
+            ps.setDate(2, fecha);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+               presentes=rs.getInt(1);
+            }
+            ps.close();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al Buscar Presentes!");
+        }
+    
+    
+}
+    
     
     public void eliminarAsistencia(int idAsistencia) {
         String sql = "DELETE FROM `asistencia` WHERE idAsistencia=?";
