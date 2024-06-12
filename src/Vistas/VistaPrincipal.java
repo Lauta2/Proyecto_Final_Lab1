@@ -38,6 +38,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jmi_ListaDeClases = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jmi_NuevoEntrenador = new javax.swing.JMenuItem();
         jmi_ListaEntrenadores = new javax.swing.JMenuItem();
@@ -111,6 +112,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu6.setText("MEMBRESIA");
+
+        jMenuItem4.setText("Registro de Membresia");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem4);
+
         jMenuBar1.add(jMenu6);
 
         jMenu4.setText("ENTRENADOR");
@@ -220,6 +230,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         escritorio.add(vic);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        VistaMembresia vm= new VistaMembresia();
+        vm.setVisible(true);
+        escritorio.add(vm);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +285,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jmenu_ListaSocios;
     private javax.swing.JMenuItem jmenu_Socio;
     private javax.swing.JMenuItem jmi_ListaDeClases;
