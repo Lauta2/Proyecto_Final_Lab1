@@ -61,24 +61,7 @@ public class AsistenciaData {
         return presentes;  
     }
     
-    public List<Socio> sociosDeClase(int idClase){
-        List<Socio> socios=new ArrayList<>();
-        String sql="SELECT * FROM ";
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idClase);
-            ps.setDate(2, fecha);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-               presentes=rs.getInt(1);
-            }
-            ps.close();
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error al Buscar Presentes!");
-        }
     
-    
-}
     
     
     public void eliminarAsistencia(int idAsistencia) {
