@@ -253,15 +253,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        ////
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         escritorio.removeAll();
         escritorio.repaint();
         VistaHistorialMembresias vhm= new VistaHistorialMembresias();
         vhm.setVisible(true);
         escritorio.add(vhm);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        
     }//GEN-LAST:event_jMenu6ActionPerformed
 
     /**
