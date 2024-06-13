@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2024 a las 05:50:02
+-- Tiempo de generación: 13-06-2024 a las 03:11:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,7 +39,9 @@ CREATE TABLE `asistencia` (
 --
 
 INSERT INTO `asistencia` (`idAsistencia`, `idSocio`, `idClase`, `fechaAsistencia`) VALUES
-(2, 1, 1, '2024-06-06');
+(2, 1, 1, '2024-06-06'),
+(4, 1, 1, '2024-06-12'),
+(8, 2, 3, '2024-06-12');
 
 -- --------------------------------------------------------
 
@@ -48,7 +50,7 @@ INSERT INTO `asistencia` (`idAsistencia`, `idSocio`, `idClase`, `fechaAsistencia
 --
 
 CREATE TABLE `clase` (
-  `id_clase` int(11) NOT NULL,
+  `idClase` int(11) NOT NULL,
   `nombre` varchar(40) NOT NULL,
   `idEntrenador` int(11) NOT NULL,
   `horario` time NOT NULL,
@@ -60,8 +62,13 @@ CREATE TABLE `clase` (
 -- Volcado de datos para la tabla `clase`
 --
 
-INSERT INTO `clase` (`id_clase`, `nombre`, `idEntrenador`, `horario`, `capacidad`, `estado`) VALUES
-(1, 'Boxeo', 1, '09:28:00', 3, 1);
+INSERT INTO `clase` (`idClase`, `nombre`, `idEntrenador`, `horario`, `capacidad`, `estado`) VALUES
+(1, 'Boxeo', 1, '09:00:00', 3, 1),
+(2, 'Peso Muerto', 2, '10:00:00', 5, 1),
+(3, 'Boxing Junior', 1, '06:00:00', 9, 1),
+(4, 'Zumba', 2, '14:00:00', 11, 1),
+(5, 'Sparring', 1, '20:00:00', 6, 1),
+(6, 'Taekwondo', 2, '11:00:00', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +90,30 @@ CREATE TABLE `entrenador` (
 --
 
 INSERT INTO `entrenador` (`idEntrenador`, `dni`, `nombre`, `apellido`, `especialidad`, `estado`) VALUES
-(1, 18544684, 'Jorge', 'Gutierrez', 'Musculacion', 1);
+(1, 18544684, 'Jorge', 'Gutierrez', 'Boxeo', 1),
+(2, 43695857, 'Victor', 'Herrera', 'Kick Boxing', 1),
+(3, 44385837, 'Marianella', 'Gutierrez', 'Yoga', 1),
+(4, 43568122, 'Daniel', 'Perez', 'Tae Bo', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inscripcion`
+--
+
+CREATE TABLE `inscripcion` (
+  `idInscripcion` int(11) NOT NULL,
+  `idSocio` int(11) NOT NULL,
+  `idClase` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inscripcion`
+--
+
+INSERT INTO `inscripcion` (`idInscripcion`, `idSocio`, `idClase`, `estado`) VALUES
+(3, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -107,8 +137,9 @@ CREATE TABLE `membresia` (
 
 INSERT INTO `membresia` (`idMembresia`, `idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES
 (1, 1, 8, '2024-06-06', '2024-07-06', 1000, 1),
-(2, 2, 16, '2024-05-05', '2024-06-05', 1500, 1),
-(3, 1, 16, '2024-06-03', '2024-07-03', 1500, 1);
+(2, 2, 16, '2024-05-05', '2024-06-05', 1500, 0),
+(3, 1, 13, '2024-06-03', '2024-07-03', 1500, 1),
+(5, 12, 16, '2024-06-12', '2024-07-12', 2000, 1);
 
 -- --------------------------------------------------------
 
@@ -155,7 +186,7 @@ ALTER TABLE `asistencia`
 -- Indices de la tabla `clase`
 --
 ALTER TABLE `clase`
-  ADD PRIMARY KEY (`id_clase`),
+  ADD PRIMARY KEY (`idClase`),
   ADD KEY `idEntrenador` (`idEntrenador`);
 
 --
@@ -164,6 +195,14 @@ ALTER TABLE `clase`
 ALTER TABLE `entrenador`
   ADD PRIMARY KEY (`idEntrenador`),
   ADD UNIQUE KEY `dni` (`dni`);
+
+--
+-- Indices de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  ADD PRIMARY KEY (`idInscripcion`),
+  ADD KEY `inscripcion_ibfk_1` (`idClase`),
+  ADD KEY `inscripcion_ibfk_2` (`idSocio`);
 
 --
 -- Indices de la tabla `membresia`
@@ -188,25 +227,31 @@ ALTER TABLE `socio`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idAsistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
-  MODIFY `id_clase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idClase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `entrenador`
 --
 ALTER TABLE `entrenador`
-  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idEntrenador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `membresia`
 --
 ALTER TABLE `membresia`
-  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `socio`
@@ -222,7 +267,7 @@ ALTER TABLE `socio`
 -- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`id_clase`),
+  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`),
   ADD CONSTRAINT `asistencia_ibfk_2` FOREIGN KEY (`idSocio`) REFERENCES `socio` (`idSocio`);
 
 --
