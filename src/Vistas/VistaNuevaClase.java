@@ -251,6 +251,10 @@ public class VistaNuevaClase extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "NO DEJE ESPACIOS EN BLANCO");
             return;
         }else{
+            if(!jt_NombreClase.getText().matches("[a-zA-Z\\s]+")){
+             JOptionPane.showMessageDialog(this, "Ingrese un nombre valido");
+             return;
+            }
             clase.setNombre(jt_NombreClase.getText());
         try{
         clase.setCapacidad(Math.abs(Integer.parseInt(jt_Capacidad.getText())));
