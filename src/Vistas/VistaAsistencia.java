@@ -245,7 +245,7 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
            
            List<Membresia> membresia=membresiaData.listarMembresiasPorSocio(socioA);
            if(!membresia.isEmpty()){
-               Membresia primerMembresia =membresia.get(1);
+               Membresia primerMembresia =membresia.get(0);
                membresiaData.usarMembresia(primerMembresia.getIdMembresia());
            }else{
                JOptionPane.showMessageDialog(this, "No tiene mas mebresias!");

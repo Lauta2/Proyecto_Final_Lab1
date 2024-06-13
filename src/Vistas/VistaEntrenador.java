@@ -163,7 +163,19 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
     private void jb_AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_AñadirActionPerformed
         int dni;
         if(!(jt_Apellido.getText().equals("") || jt_DNI.getText().equals("") || jt_Especialidad.getText().equals("") || jt_Nombre.getText().equals(""))){
-        try{
+        if(!jt_Nombre.getText().matches("[a-zA-Z\s]+")){
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre valido!");
+        return;
+        }
+        if(!jt_Apellido.getText().matches("[a-zA-Z\s]+")){
+            JOptionPane.showMessageDialog(this, "Ingrese un apellido valido!");
+        return;
+        }
+        if(!jt_Especialidad.getText().matches("[a-zA-Z\s]+")){
+            JOptionPane.showMessageDialog(this, "Ingrese una especilidad valida!");
+        return;
+        }
+            try{
             dni=Integer.parseInt(jt_DNI.getText());
         }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(this, "El DNI es un Numero entero!");
