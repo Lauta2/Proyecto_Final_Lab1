@@ -141,6 +141,7 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
         jt_NombreEntrenador = new javax.swing.JTextField();
         jcb_ComboHorarios = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
 
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
@@ -207,6 +208,13 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -256,7 +264,9 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
                 .addGap(56, 56, 56))
             .addGroup(layout.createSequentialGroup()
                 .addGap(91, 91, 91)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -295,7 +305,9 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jt_SocioDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(jb_Inscribirse)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_Inscribirse)
+                    .addComponent(jButton1))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -423,11 +435,16 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jb_InscribirseActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
