@@ -57,6 +57,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jb_Salir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setTitle("SOCIO");
 
@@ -117,6 +118,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Estado");
 
+        jLabel10.setText("@gmail.com");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +149,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jt_Apellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jt_Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jt_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel10))))))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(18, 18, 18)
@@ -210,7 +216,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jt_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel10))
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -363,6 +370,14 @@ private void llenarCamposSocio(Socio socio) {
             JOptionPane.showMessageDialog(this, "NO DEJE CAMPOS EN BLANCO");
             return;
             }
+            if(!jt_Nombre.getText().matches("[a-zA-Z\\s]+")){
+             JOptionPane.showMessageDialog(this, "Ingrese un nombre valido");
+             return;
+            }
+            if(!jt_Apellido.getText().matches("[a-zA-Z\\s]+")){
+            JOptionPane.showMessageDialog(this, "Ingrese un apellido valido");
+            return;
+            }
             try{
            
             if(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText()))!=null){
@@ -378,7 +393,7 @@ private void llenarCamposSocio(Socio socio) {
                     }
             apellido=(jt_Apellido.getText());
             nombre=(jt_Nombre.getText());
-            correo=(jt_Email.getText());
+            correo=(jt_Email.getText()+"@gmail.com");
             estado=(jcb_Estado.isSelected());
             socio=new Socio(dni,nombre, apellido, edad, correo, telefono, estado);
             socioData.guardarSocio(socio);
@@ -425,6 +440,7 @@ private void llenarCamposSocio(Socio socio) {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
