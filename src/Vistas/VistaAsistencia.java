@@ -220,14 +220,14 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
    String socioSeleccionado =(String) jcb_Socios.getSelectedItem();
    if(socioSeleccionado==null){
        JOptionPane.showMessageDialog(this, "Seleccione un socio!");
-       
+       return;
    }
            Socio socioEncontrado =null;
            for(Socio socio: inscripcionData.listarSociosInscriptos(claseA)){
                if(socio.toString().equals(socioSeleccionado)){
                    socioEncontrado=socio;
                    socioA=socio.getIdSocio();
-                  
+                  break;
                }
            }
            
@@ -240,12 +240,8 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
            }
            if(presentes.contains(socioA)){
                JOptionPane.showMessageDialog(this, "Socio ya dio el presente!");
-              
-           }        
-           
-           Asistencia asistencia = new Asistencia(socioEncontrado, claseData.buscarClase(claseA),hoy);
-           asistenciaData.guardarAsistencia(asistencia);
-           
+              return;
+           }  
            
            List<Membresia> membresia=membresiaData.listarMembresiasPorSocio(socioA);
            if(!membresia.isEmpty()){
@@ -253,9 +249,12 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
                membresiaData.usarMembresia(primerMembresia.getIdMembresia());
            }else{
                JOptionPane.showMessageDialog(this, "No tiene mas mebresias!");
+               return;
            }
                           JOptionPane.showMessageDialog(this, "Asistencia marcada correctamente!");
-
+           
+           Asistencia asistencia = new Asistencia(socioEncontrado, claseData.buscarClase(claseA),hoy);
+           asistenciaData.guardarAsistencia(asistencia);
     }//GEN-LAST:event_jb_MarcarAsistenciaActionPerformed
 
 

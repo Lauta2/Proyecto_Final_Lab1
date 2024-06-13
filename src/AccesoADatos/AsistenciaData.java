@@ -47,7 +47,7 @@ public class AsistenciaData {
     
     public List<Integer> sociosIDPresentes(int idClase ,LocalDate fechaAsistencia){
         Date fecha=Date.valueOf(fechaAsistencia);
-        List<Integer> presentes=null;
+        List<Integer> presentes=new ArrayList<>();
         String sql="SELECT asistencia.idSocio FROM asistencia WHERE idClase=? AND fechaAsistencia=?";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
