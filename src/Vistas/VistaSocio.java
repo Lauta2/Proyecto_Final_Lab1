@@ -88,6 +88,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Telefono");
 
+        jt_Telefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jt_TelefonoActionPerformed(evt);
+            }
+        });
+
         jb_Guardar.setText("Guardar");
         jb_Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,14 +124,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Estado");
 
-        jLabel10.setText("@gmail.com");
+        jLabel10.setText("266 -");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(203, 203, 203)
@@ -144,15 +150,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel5))
                                     .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jt_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jt_Apellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jt_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jLabel10))))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jt_Nombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                        .addComponent(jt_Apellido, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jt_Email, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jt_Telefono)))))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(18, 18, 18)
@@ -183,7 +188,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(141, 141, 141))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,8 +221,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jt_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel10))
+                                    .addComponent(jLabel7))
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -225,7 +229,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jt_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -378,6 +383,11 @@ private void llenarCamposSocio(Socio socio) {
             JOptionPane.showMessageDialog(this, "Ingrese un apellido valido");
             return;
             }
+            
+            if(!jt_Email.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")){
+            JOptionPane.showMessageDialog(this, "Ingrese un Email valido");
+            return;
+            }
             try{
            
             if(socioData.buscarSocioDNI(Integer.parseInt(jt_DNI.getText()))!=null){
@@ -393,7 +403,7 @@ private void llenarCamposSocio(Socio socio) {
                     }
             apellido=(jt_Apellido.getText());
             nombre=(jt_Nombre.getText());
-            correo=(jt_Email.getText()+"@gmail.com");
+            correo=(jt_Email.getText());
             estado=(jcb_Estado.isSelected());
             socio=new Socio(dni,nombre, apellido, edad, correo, telefono, estado);
             socioData.guardarSocio(socio);
@@ -434,6 +444,10 @@ private void llenarCamposSocio(Socio socio) {
 
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jt_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jt_TelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jt_TelefonoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
