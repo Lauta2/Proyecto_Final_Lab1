@@ -177,9 +177,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                     .addComponent(jtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbLimpiar)
-                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbLimpiar)))
                     .addComponent(jbGuardar))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -196,13 +197,17 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 mem.setSocio(s);
             }
         }
-        
+        if (!jtPases.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido en pases");
+            return;
+            }
         try{
         pases=Integer.parseInt(jtPases.getText());
         mem.setCantidadPases(pases);
         }catch(NullPointerException e){
         JOptionPane.showMessageDialog(null, "Los pases deben ser enteros");
         }
+       
         
 
         LocalDate fechaI=LocalDate.now();
@@ -214,6 +219,12 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Fecha Vencimiento debe ser mayor a "+fechaI.toString());
             return;
         }
+        
+        if (!jtCosto.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido en costo");
+            return;
+            }
+        
         mem.setFechaFin(fechaF);
         try{
         costo=Double.parseDouble(jtCosto.getText());
