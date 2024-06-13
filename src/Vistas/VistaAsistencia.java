@@ -32,6 +32,8 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
     List<Clase> clases;
     int claseA;
     int socioA;
+    ArrayList<Socio> sociosInscriptos = null;
+    
     /**
      * Creates new form VistaAsistencia
      */
@@ -51,31 +53,36 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
     
     
     
-    private void cargarCombo(){
-    clases=(List<Clase>)claseData.listarClases();
+    private void cargarCombo() {
+        jcb_ComboClase.removeAllItems();
+        clases = claseData.listarClases();
         for (Clase clase : clases) {
             jcb_ComboClase.addItem(clase.toString());
-        } 
-        
-}
-    private void cargaSocios(){
-        jcb_Socios.removeAllItems();
-        ArrayList<Socio> sociosInscriptos=null;
-        int idClase=-1;
-        String elegida=(String) jcb_ComboClase.getSelectedItem();
-        clases=(List<Clase>)claseData.listarClases();
-        for (Clase clase : clases) {     
-            if(clase.toString().equals(elegida)){
-                idClase=clase.getIdClase();
-                claseA=idClase;
-            }
-        }
-        sociosInscriptos=(ArrayList<Socio>) inscripcionData.listarSociosInscriptos(idClase);
-        for (Socio sociosInscripto : sociosInscriptos) {
-          jcb_Socios.addItem(sociosInscripto.toString());
         }
     }
-    
+        
+
+    private void cargaSocios() {
+        jcb_Socios.removeAllItems();
+        String clasesSeleccionada = (String) jcb_ComboClase.getSelectedItem();
+        
+             
+            if (clasesSeleccionada != null) {
+                for (Clase clase: clases){
+                    if (clase.toString().equals(clasesSeleccionada)){
+                        claseA=clase.getIdClase();
+                        break;
+            }
+        }
+                List<Socio> sociosInscriptos = inscripcionData.listarSociosInscriptos(claseA);
+                for (Socio socio:sociosInscriptos){
+                    jcb_Socios.addItem(socio.toString());
+                }
+    }
+            else{
+                JOptionPane.showMessageDialog(this, "No se encontraron socios inscriptos para la clase");
+            }
+    }
     private void actualizarMembresias(){
         List<Socio> socios=socioData.listarSocios();
         for (Socio socio : socios) {
@@ -210,35 +217,45 @@ public class VistaAsistencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jb_SalirActionPerformed
 
     private void jb_MarcarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_MarcarAsistenciaActionPerformed
-        Asistencia asistencia=new Asistencia();
-        
-        LocalDate hoy=LocalDate.now();
-        ArrayList<Socio> sociosInscriptos = (ArrayList<Socio>) inscripcionData.listarSociosInscriptos(claseA);
-        for (Socio sociosInscripto : sociosInscriptos) {
-          jcb_Socios.addItem(sociosInscripto.toString());
-//          socioA=sociosInscripto.getIdSocio();
-        }
-        
-        
-        List<Membresia> membresias=membresiaData.listarMembresiasPorSocio(socioA);
-        Membresia primerMembresia=membresias.get(1);
-        membresiaData.usarMembresia(primerMembresia.getIdMembresia());
-        List<Integer> presentes=asistenciaData.sociosIDPresentes(claseA, hoy);
-        for (Integer presente : presentes) {
-            if(socioA==presente){
-                JOptionPane.showMessageDialog(this, "SOCIO YA DIO EL PRESENTE!");
-                return;
-            }
-        }
-        
-        
-        asistencia=new Asistencia(socioData.buscarSocioID(socioA), claseData.buscarClase(claseA), hoy);
-        asistenciaData.guardarAsistencia(asistencia);
-        
-        
-        
-        
-        
+   String socioSeleccionado =(String) jcb_Socios.getSelectedItem();
+   if(socioSeleccionado==null){
+       JOptionPane.showMessageDialog(this, "Seleccione un socio!");
+       
+   }
+           Socio socioEncontrado =null;
+           for(Socio socio: inscripcionData.listarSociosInscriptos(claseA)){
+               if(socio.toString().equals(socioSeleccionado)){
+                   socioEncontrado=socio;
+                   socioA=socio.getIdSocio();
+                  
+               }
+           }
+           
+           LocalDate hoy= LocalDate.now();
+           
+           
+           ArrayList<Integer> presentes = (ArrayList<Integer>) asistenciaData.sociosIDPresentes(claseA, hoy);
+           if (presentes==null){
+               presentes=new ArrayList<>();
+           }
+           if(presentes.contains(socioA)){
+               JOptionPane.showMessageDialog(this, "Socio ya dio el presente!");
+              
+           }        
+           
+           Asistencia asistencia = new Asistencia(socioEncontrado, claseData.buscarClase(claseA),hoy);
+           asistenciaData.guardarAsistencia(asistencia);
+           
+           
+           List<Membresia> membresia=membresiaData.listarMembresiasPorSocio(socioA);
+           if(!membresia.isEmpty()){
+               Membresia primerMembresia =membresia.get(1);
+               membresiaData.usarMembresia(primerMembresia.getIdMembresia());
+           }else{
+               JOptionPane.showMessageDialog(this, "No tiene mas mebresias!");
+           }
+                          JOptionPane.showMessageDialog(this, "Asistencia marcada correctamente!");
+
     }//GEN-LAST:event_jb_MarcarAsistenciaActionPerformed
 
 

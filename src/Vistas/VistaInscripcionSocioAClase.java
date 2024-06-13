@@ -412,6 +412,7 @@ public class VistaInscripcionSocioAClase extends javax.swing.JInternalFrame {
             }
             
             Inscripcion inscripcion=new Inscripcion(socio.getIdSocio(), claseInscribir.getIdClase(), true);
+            inscripcionData.guardarInscripcion(inscripcion);
             JOptionPane.showMessageDialog(this,"INSCRIPTO CON EXITO!");
             inhabilitarBotones();
             botonesDeBusqueda();
