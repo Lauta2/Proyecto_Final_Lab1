@@ -411,6 +411,19 @@ private void llenarCamposSocio(Socio socio) {
             socio.setIdSocio(Integer.parseInt(jt_ID.getText()));
             jt_ID.disable();
         }else{
+             if(!jt_Nombre.getText().matches("[a-zA-Z\\s]+")){
+             JOptionPane.showMessageDialog(this, "Ingrese un nombre valido");
+             return;
+            }
+            if(!jt_Apellido.getText().matches("[a-zA-Z\\s]+")){
+            JOptionPane.showMessageDialog(this, "Ingrese un apellido valido");
+            return;
+            }
+            
+            if(!jt_Email.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")){
+            JOptionPane.showMessageDialog(this, "Ingrese un Email valido");
+            return;
+            }
             try{
             socio.setDni(Integer.parseInt(jt_DNI.getText()));
             socio.setEdad(Integer.parseInt(jt_Edad.getText()));
